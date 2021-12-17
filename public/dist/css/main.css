@@ -1,0 +1,34 @@
+body {
+    background-color: #efefef;
+}
+
+.btn-light-blue {
+    background-color: #5584AC;
+    border: 1px #5584AC;
+    color: #ffffff;
+}
+
+/** Home page **/
+.btn-card {
+    background-color: #023052;
+    color: #ffffff;
+}
+
+.btn-card:hover {
+    color: #ffffff;
+    background-color: #22577E;
+}
+/***************/
+
+.jumbotron {
+    background-color: #ffffff;
+}
+
+.blue-background {
+    background-color: #22577E;
+}
+
+footer {
+    background-color: #22577E;
+    min-height: 75px;
+}
