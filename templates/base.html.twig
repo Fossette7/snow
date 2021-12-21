@@ -30,15 +30,65 @@
           <a href="{{ url('home') }}" class="nav-item nav-link active">accueil</a>
           <a href="#" class="nav-item nav-link" tabindex="-1">page 1</a>
         </div>
-        <div class="navbar-nav ms-auto">
-          <button type="button" class="btn btn-light-blue"><i class="fas fa fa-user"></i> Connexion</button>
-        </div>
+        {% if last_username is not defined %}
+          <div class="navbar-nav ms-auto">
+            <button type="button" class="btn btn-light-blue" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
+                  class="fas fa fa-user"></i> Connexion
+            </button>
+          </div>
+        {% endif %}
       </div>
     </div>
   </nav>
 </header>
 
 {% block body %}{% endblock %}
+
+<!-- login Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form method="post" action="{{ path('app_login') }}">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Authentifiez-vous</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <div class="row g-3 align-items-center mb-3">
+            <div class="col-sm-3 offset-1">
+              <label for="inputEmail" class="col-form-label">Email</label>
+            </div>
+            <div class="col-sm-6">
+              <input type="email" id="inputEmail" class="form-control" aria-describedby="passwordHelpInline"
+                     autocomplete="email" required
+                     autofocus>
+            </div>
+          </div>
+
+          <div class="row g-3 align-items-center mb-3">
+            <div class="col-sm-3 offset-1">
+              <label for="inputPassword" class="col-form-label">Password</label>
+            </div>
+            <div class="col-sm-6">
+              <input type="password" name="password" id="inputPassword" class="form-control"
+                     autocomplete="current-password"
+                     required id="inputPassword" class="form-control">
+            </div>
+          </div>
+          <input type="hidden" name="_csrf_token"
+                 value="{{ csrf_token('authenticate') }}"
+          >
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">validé</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
 
 <footer class="mt-5">
 </footer>
