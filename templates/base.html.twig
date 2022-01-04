@@ -21,7 +21,7 @@
 
   <nav class="navbar navbar-expand-lg navbar-dark blue-background">
     <div class="container">
-      <a href="#" class="navbar-brand">Snow-week</a>
+      <a href="{{ url('home') }}" class="navbar-brand">Snow-week</a>
       <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -30,12 +30,19 @@
           <a href="{{ url('home') }}" class="nav-item nav-link active">accueil</a>
           <a href="#" class="nav-item nav-link" tabindex="-1">page 1</a>
         </div>
-        {% if last_username is not defined %}
+
+        {% if app.user is not defined or app.user is null %}
           <div class="navbar-nav ms-auto">
             <button type="button" class="btn btn-light-blue" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
                   class="fas fa fa-user"></i> Connexion
             </button>
           </div>
+          {% else %}
+            <div class="navbar-nav ms-auto">
+              <button type="button" class="btn btn-light-blue">
+                <i class="fas fa-sign-out-alt"></i> <a class="nav-link" id="logout" href="{{ path('app_logout') }}">déconnexion</a>
+              </button>
+            </div>
         {% endif %}
       </div>
     </div>
@@ -47,20 +54,19 @@
 <!-- login Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <form method="post" action="{{ path('app_login') }}">
+    <form method="post" action="{{ url('app_login') }}">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Authentifiez-vous</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-
           <div class="row g-3 align-items-center mb-3">
             <div class="col-sm-3 offset-1">
               <label for="inputEmail" class="col-form-label">Email</label>
             </div>
             <div class="col-sm-6">
-              <input type="email" id="inputEmail" class="form-control" aria-describedby="passwordHelpInline"
+              <input type="email" name="email" id="inputEmail" class="form-control"
                      autocomplete="email" required
                      autofocus>
             </div>
@@ -76,6 +82,7 @@
                      required id="inputPassword" class="form-control">
             </div>
           </div>
+          <div class="row g-3 align-items-center mb-3"><p>Pas encore de compte! <a href="{{ url('app_register') }}">Vous pouvez le créer ici</a></p></div>
           <input type="hidden" name="_csrf_token"
                  value="{{ csrf_token('authenticate') }}"
           >

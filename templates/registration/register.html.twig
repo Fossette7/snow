@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="offset-sm-1 col-sm-10 offset-md-2 col-md-10 offset-lg-3 col-lg-6 mt-5 p-4" id="registration-block"
+                 style="background-color: #fcfcfc">
+                <p class="col-12">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce ante quam, placerat eu lorem
+                    at, venenatis pellentesque magna.</p>
+                {{ form_start(registrationForm) }}
+                <div class="row g-3 align-items-center mb-3">
+                    <div class="col-sm-3 offset-1">
+                        {{ form_label(registrationForm.email, 'Email', {'attr': {'class': 'col-form-label'}}) }}
+                    </div>
+                    <div class="col-sm-6">
+                        {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+
+                <div class="row g-3 align-items-center mb-3">
+                    <div class="col-sm-3 offset-1">
+                        {{ form_label(registrationForm.plainPassword, 'Password', {'attr': {'class': 'col-form-label'}}) }}
+                    </div>
+                    <div class="col-sm-6">
+                        {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+
+                {% if (form_errors(registrationForm.email) is not empty) %}
+                    <div class="row g-3 align-items-center mb-3">
+                        <div class="col-sm-12 form-error">
+                            <i class="fas fa-exclamation-triangle"></i> {{ form_errors(registrationForm.email) }}
+                        </div>
+                    </div>
+
+                    {{ form_row(registrationForm._token) }}
+
+                {% endif %}
+
+                <div class="row">
+                    {{ form_row(registrationForm.submit, { 'label': 'Enregister', 'attr': {'class': 'btn btn-heavy-blue btn-lg col-12'} }) }}
+                </div>
+
+                {{ form_end(registrationForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

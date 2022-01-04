@@ -8,6 +8,16 @@ body {
     color: #ffffff;
 }
 
+.btn-heavy-blue {
+    background-color: #22577E;
+    border: 1px #22577E;
+    color: #ffffff;
+}
+
+.btn-heavy-blue:hover, btn-heavy-blue:hover {
+    color: #ffffff;
+}
+
 /** Home page **/
 .btn-card {
     background-color: #023052;
@@ -17,6 +27,27 @@ body {
 .btn-card:hover {
     color: #ffffff;
     background-color: #22577E;
+}
+
+#logout {
+    display: inline !important;
+}
+/***************/
+
+/** Register page **/
+#registration-block {
+    background-color: #fcfcfc;
+    border-radius: 3%;
+}
+/***************/
+
+/** global form **/
+.form-error {
+    color: #dc3545;
+}
+
+.form-error .invalid-feedback {
+    display: inline !important;
 }
 /***************/
 
