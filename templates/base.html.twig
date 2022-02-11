@@ -1,8 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>{% block title %}Welcome!{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Site pour les passionnés de snowbord">
+  <title>{% block title %}Bienvenue!{% endblock %}</title>
+  <!-- Custom styles for this template -->
+  <link rel="icon" type="image/png" href="{{ asset('dist/picture/logo.ico.png') }}">
   <link rel="icon"
         href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
   {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
@@ -21,14 +25,14 @@
 
   <nav class="navbar navbar-expand-lg navbar-dark blue-background">
     <div class="container">
-      <a href="#" class="navbar-brand">Snow-week</a>
+      <a href="{{ path('home') }}"><img src="{{ asset('dist/picture/logo.ico.png') }}" class="navbar-brand"></a>
       <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav">
-          <a href="{{ url('home') }}" class="nav-item nav-link active">accueil</a>
-          <a href="#" class="nav-item nav-link" tabindex="-1">page 1</a>
+          <a href="{{ path('home') }}" class="nav-item nav-link active">Accueil</a>
+          <a href="#" class="nav-item nav-link" tabindex="-1">Tricks</a>
         </div>
         <div class="navbar-nav ms-auto">
           <button type="button" class="btn btn-light-blue"><i class="fas fa fa-user"></i> Connexion</button>
