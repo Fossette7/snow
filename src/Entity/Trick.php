@@ -34,6 +34,11 @@ class Trick
      */
     private $image;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="name")
+     */
+    private $category;
+
     public function __construct()
     {
         $this->image = new ArrayCollection();
@@ -94,6 +99,18 @@ class Trick
                 $image->setTrick(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }
