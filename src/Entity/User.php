@@ -69,6 +69,7 @@ class User
     public function __construct()
     {
         $this->trick = new ArrayCollection();
+        $this->createdAt = new \DateTime('now');
     }
 
     public function getId(): ?int
