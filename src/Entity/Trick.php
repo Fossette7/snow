@@ -35,7 +35,7 @@ class Trick
     private $image;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="name")
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="tricks")
      */
     private $category;
 
