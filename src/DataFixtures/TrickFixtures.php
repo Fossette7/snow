@@ -25,7 +25,7 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface
             $trick->setName(array_rand($tricksName, 1));
             $trick->setCreatedAt(new \DateTime());
             $trick->getImage('snowtricks_photo_2-girl.jpg');
-            $trick->setUser();
+            $trick->setUser($faker->randomElement($array = array ('Paul','Amanda','Joshua')));
 
             $manager->persist($trick);
         }
