@@ -106,7 +106,7 @@ class User
         return $this->active;
     }
 
-    public function setActive(bool $active): self
+    public function setActive(bool $active = true): self
     {
         $this->active = $active;
 

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2e2fa89cfa6924d7e3d27172a39a87d1",
+    "content-hash": "6e842b92eb7e9e48ecaf15f6def62183",
     "packages": [
         {
             "name": "composer/package-versions-deprecated",
@@ -4986,16 +4986,16 @@
         },
         {
             "name": "symfony/password-hasher",
-            "version": "v5.4.0",
+            "version": "v5.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/password-hasher.git",
-                "reference": "60c4aba11e2ce4140a5a9cbc13733da4b8333e2d"
+                "reference": "b5ed59c4536d8386cd37bb86df2b7bd5fbbd46d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/password-hasher/zipball/60c4aba11e2ce4140a5a9cbc13733da4b8333e2d",
-                "reference": "60c4aba11e2ce4140a5a9cbc13733da4b8333e2d",
+                "url": "https://api.github.com/repos/symfony/password-hasher/zipball/b5ed59c4536d8386cd37bb86df2b7bd5fbbd46d4",
+                "reference": "b5ed59c4536d8386cd37bb86df2b7bd5fbbd46d4",
                 "shasum": ""
             },
             "require": {
@@ -5039,7 +5039,7 @@
                 "password"
             ],
             "support": {
-                "source": "https://github.com/symfony/password-hasher/tree/v5.4.0"
+                "source": "https://github.com/symfony/password-hasher/tree/v5.4.3"
             },
             "funding": [
                 {
@@ -5055,7 +5055,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-10-30T15:55:55+00:00"
+            "time": "2022-01-02T09:53:40+00:00"
         },
         {
             "name": "symfony/polyfill-intl-grapheme",
