@@ -15,10 +15,18 @@ class TrickType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('TrickName',Trick::class)
-            ->add('createdAt',DateType::class)
-            ->add('category', Category::class)
-            ->add('user', User::class)
+            ->add('TrickName',Trick::class,[
+                'label'=>'Nom de figure'])
+
+            ->add('createdAt',DateType::class,[
+                'label'=>'écrit le'
+            ])
+            ->add('category', Category::class,[
+                'label'=>'Category'])
+
+            ->add('author', User::class,[
+                'label'=>'Rider-Auteur'
+        ])
         ;
     }
 

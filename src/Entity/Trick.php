@@ -38,20 +38,22 @@ class Trick
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="tricks")
-     * @Assert\NotBlank(message = "Le contenu ne peut être vide.")
      */
     private $category;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="trick")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="tricks")
+     * @Assert\NotBlank(message = "Le contenu ne peut être vide.")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user;
+    private $author;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\NotBlank(message = "Le contenu ne peut être vide.")
      */
-    private $Description;
+    private $description;
+
 
     public function __construct()
     {
@@ -137,26 +139,27 @@ class Trick
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getAuthor(): ?User
     {
-        return $this->user;
+        return $this->author;
     }
 
-    public function setUser(?User $user): self
+    public function setAuthor(?User $author): self
     {
-        $this->user = $user;
+        $this->author = $author;
 
         return $this;
     }
 
+
     public function getDescription(): ?string
     {
-        return $this->Description;
+        return $this->description;
     }
 
-    public function setDescription(?string $Description): self
+    public function setDescription(?string $description): self
     {
-        $this->Description = $Description;
+        $this->description = $description;
 
         return $this;
     }

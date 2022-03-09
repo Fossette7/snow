@@ -49,11 +49,6 @@ class User
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $comment;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
     private $avatar;
 
     /**
@@ -64,7 +59,8 @@ class User
     /**
      * @ORM\OneToMany(targetEntity=Trick::class, mappedBy="user")
      */
-    private $trick;
+    private $tricks;
+
 
     public function __construct()
     {
@@ -137,18 +133,6 @@ class User
         return $this;
     }
 
-    public function getComment(): ?string
-    {
-        return $this->comment;
-    }
-
-    public function setComment(string $comment): self
-    {
-        $this->comment = $comment;
-
-        return $this;
-    }
-
     public function getAvatar(): ?string
     {
         return $this->avatar;
@@ -176,27 +160,27 @@ class User
     /**
      * @return Collection|Trick[]
      */
-    public function getTrick(): Collection
+    public function getTricks(): Collection
     {
-        return $this->trick;
+        return $this->tricks;
     }
 
-    public function addTrick(Trick $trick): self
+    public function addTricks(Trick $trick): self
     {
-        if (!$this->trick->contains($trick)) {
+        if (!$this->tricks->contains($trick)) {
             $this->trick[] = $trick;
-            $trick->setUser($this);
+            $trick->setAuthor($this);
         }
 
         return $this;
     }
 
-    public function removeTrick(Trick $trick): self
+    public function removeTricks(Trick $tricks): self
     {
-        if ($this->trick->removeElement($trick)) {
+        if ($this->tricks->removeElement($tricks)) {
             // set the owning side to null (unless already changed)
-            if ($trick->getUser() === $this) {
-                $trick->setUser(null);
+            if ($tricks->getAuthor() === $this) {
+                $tricks->setAuthor(null);
             }
         }
 
