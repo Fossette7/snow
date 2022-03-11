@@ -13,16 +13,19 @@
 
   <div class="container">
     <div class="row">
-
+    <!-- mettre la boucle for pour afficher les articles en BDD-->
       <div class="shadow col-sm-6 col-md-4 col-lg-3 mb-3">
         <div class="card col-md-12 p-0">
           <img class="card-img-top" src="https://picsum.photos/400/301" alt="Card image cap">
           <div class="card-body">
-            <h5 class="card-title">Trick title</h5>
+            <h5 class="card-title">trickname en variable twig</h5>
+            <div class="metadata"> Ecrit le <!-- + variable twig createdAt + filtre date('d/m/Y')--></div>
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
               content.</p>
+              <h6>auteur</h6>
+
             <!-- renvoyer l'id trick path 'nom de la route', {param ID}) }} -->
-            <a href="#" class="btn btn-primary btn-card stretched-link">Détail</a>
+            <a href="#" class="btn btn-primary btn-card stretched-link">Détail en variable twig</a>
           </div>
         </div>
       </div>
