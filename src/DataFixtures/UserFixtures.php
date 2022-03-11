@@ -16,20 +16,18 @@ class UserFixtures extends Fixture
 
         $faker = Faker\Factory::create();
 
-        for ($i = 0; $i < 10; $i++){
             $user= New User();
-            $user->setUsername($faker->name);
-            $user->setEmail($faker->email);
+            $user->setUsername('admin');
+            $user->setEmail('pomme@pommemail.com');
             $user->setActive(true);
             $user->setCreatedAt(new \DateTime());
-            $user->setRole('user');
-            $user->setComment('comment');
-            $user->setavatar('avatar');
-            $user->setPassword($faker->password());
+            $user->setRole('admin');
+            $user->setavatar($faker->imageUrl());
+            $password = '123456';
+            $user->setPassword($password);
 
+            $manager->persist($user);
 
-        }
-
-        $manager->flush();
+            $manager->flush();
     }
 }

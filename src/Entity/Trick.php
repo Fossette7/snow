@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\TrickRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -21,6 +22,7 @@ class Trick
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Ajoutez un nom de figure.")
      */
     private $name;
 
@@ -30,12 +32,13 @@ class Trick
     private $createdAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=image::class, mappedBy="trick")
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="trick")
      */
     private $image;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="name")
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="tricks")
+     * @Assert\NotBlank(message = "Le contenu ne peut être vide.")
      */
     private $category;
 
@@ -44,6 +47,11 @@ class Trick
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $Description;
 
     public function __construct()
     {
@@ -87,6 +95,13 @@ class Trick
         return $this->image;
     }
 
+    public function setImage($image):self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
     public function addImage(image $image): self
     {
         if (!$this->image->contains($image)) {
@@ -114,6 +129,7 @@ class Trick
         return $this->category;
     }
 
+
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
@@ -129,6 +145,18 @@ class Trick
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->Description;
+    }
+
+    public function setDescription(?string $Description): self
+    {
+        $this->Description = $Description;
 
         return $this;
     }

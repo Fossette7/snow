@@ -32,6 +32,10 @@ footer {
     background-color: #22577E;
     min-height: 75px;
 }
+
 .fa.fa-github, .fa.fa-instagram, .fa.fa-facebook, :hover {
-color: #000000;
+    color: #000000;
+}
+a:hover{
+    color:#000000;
 }

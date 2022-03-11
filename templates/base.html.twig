@@ -30,7 +30,7 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav">
           <a href="{{ path('home') }}" class="nav-item nav-link active">Accueil</a>
-          <a href="#" class="nav-item nav-link" tabindex="-1">Tricks</a>
+          <a href="{{ path('trick_index') }}" class="nav-item nav-link" tabindex="-1">Tricks</a>
         </div>
         <div class="navbar-nav ms-auto">
           <button type="button" class="btn btn-light-blue"><i class="fas fa fa-user"></i> Connexion</button>
@@ -44,12 +44,15 @@
 
 <footer class="mt-5">
   <div class="container">
-    <div class="row d-flex" id="fab-icon">
-      <div class="offset-10 col-lg-6 col-md-6 col-sm-6 mt-3">
-        <a href="#"><i class="fab fa-github fa-lg fa-2x" aria-hidden="true"></i></a>
-        <a href="#"><i class="fab  fa-facebook fa-lg fa-2x"></i></a>
-        <a href="#"><i class="fab fa-instagram fa-lg fa-2x" aria-hidden="true"></i></a>
+      <div class="d-flex offset-10 col-lg-2 offset-md-9 col-md-3 col-sm-4 offset-2 col-xs-7 mt-3 pt-3">
+        <div class="mx-1"><a href="#"><i class="fab fa-github fa-lg fa-2x" aria-hidden="true"></i></a></div>
+        <div class="mx-1"><a href="#"><i class="fab  fa-facebook fa-lg fa-2x"></i></a></div>
+        <div class="mx-1"><a href="#"><i class="fab fa-instagram fa-lg fa-2x" aria-hidden="true"></i></a></div>
       </div>
+
+
+    <div class="footer-copyright text-center py-3">
+      <p>© 2022 Copyright:<a href="#"> Reybeka.com</a></p>
     </div>
   </div>
 </footer>

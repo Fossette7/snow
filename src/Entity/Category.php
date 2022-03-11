@@ -20,13 +20,18 @@ class Category
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity=Trick::class, mappedBy="category")
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $name;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Trick::class, mappedBy="category")
+     */
+    private $tricks;
+
     public function __construct()
     {
-        $this->name = new ArrayCollection();
+        $this->tricks = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -35,29 +40,46 @@ class Category
     }
 
     /**
-     * @return Collection|Trick[]
+     * @return mixed
      */
-    public function getName(): Collection
+    public function getName()
     {
         return $this->name;
     }
 
-    public function addName(Trick $name): self
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
     {
-        if (!$this->name->contains($name)) {
-            $this->name[] = $name;
-            $name->setCategory($this);
+        $this->name = $name;
+    }
+
+
+    /**
+     * @return Collection|Trick[]
+     */
+    public function getTricks(): Collection
+    {
+        return $this->tricks;
+    }
+
+    public function addTricks(Trick $trick): self
+    {
+        if (!$this->tricks->contains($trick)) {
+            $this->tricks[] = $trick;
+            $trick->setCategory($this);
         }
 
         return $this;
     }
 
-    public function removeName(Trick $name): self
+    public function removeTricks(Trick $trick): self
     {
-        if ($this->name->removeElement($name)) {
+        if ($this->tricks->removeElement($trick)) {
             // set the owning side to null (unless already changed)
-            if ($name->getCategory() === $this) {
-                $name->setCategory(null);
+            if ($trick->getCategory() === $this) {
+                $trick->setCategory(null);
             }
         }
 
