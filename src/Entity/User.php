@@ -47,11 +47,6 @@ class User
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $comment;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
     private $avatar;
 
     /**
@@ -120,18 +115,6 @@ class User
     public function setRole(string $role): self
     {
         $this->role = $role;
-
-        return $this;
-    }
-
-    public function getComment(): ?string
-    {
-        return $this->comment;
-    }
-
-    public function setComment(string $comment): self
-    {
-        $this->comment = $comment;
 
         return $this;
     }
