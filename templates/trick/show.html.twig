@@ -5,15 +5,15 @@
 {% block body %}
 
     <div class="container">
-        <section>
+        <section class="text-center">
 
             <h1>Figure: {{ trick.name }}</h1>
-                <img src="https://picsum.photos/400/305" alt="img card"/>
+                <img src="https://picsum.photos/800/365" alt="img card"/>
 
 
             <h3> {{ trick.description }}</h3>
 
-            <p>{{ trick.createdAt ? trick.createdAt|date('Y-m-d H:i:s') : '' }}</p>
+            <p>{{ trick.createdAt ? trick.createdAt|date('d-m-Y') : '' }}</p>
 
             <p>écrit par: {{ trick.author.username }}</p>
 
