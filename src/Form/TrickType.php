@@ -2,8 +2,10 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\Trick;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -22,14 +24,8 @@ class TrickType extends AbstractType
             ->add('createdAt',DateType::class,[
                 'label'=>'écrit le'
             ])
-            ->add('category', ChoiceType::class,[
-                'label'=>'Catégories',
-                'choices' => [
-                    'Slide'=> 'choix1',
-                    'Rotation'=> 'choix2',
-                    'Flip'=>'choix3',
-                    'Grab'=>'choix4'
-                ],
+            ->add('category', EntityType::class,[
+                'class' => Category::class,
                 ])
 
             ->add('author', TextType::class,[
