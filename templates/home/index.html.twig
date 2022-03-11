@@ -11,70 +11,29 @@
       </div>
   </div>
 
+
   <div class="container">
     <div class="row">
-
+        {% for trick in tricks %}
+    <!-- mettre la boucle for pour afficher les articles en BDD-->
       <div class="shadow col-sm-6 col-md-4 col-lg-3 mb-3">
         <div class="card col-md-12 p-0">
           <img class="card-img-top" src="https://picsum.photos/400/301" alt="Card image cap">
           <div class="card-body">
-            <h5 class="card-title">Trick title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-              content.</p>
+            <h4 class="card-title">{{ trick.name }}</h4>
+            <div class="metadata text-muted small"> Ecrit le {{ trick.createdAt |date('d/m/Y') }}</div>
+            <p class="card-text">{{ trick.description }}</p>
+              <h6>{{ trick.author.username }}</h6>
+
             <!-- renvoyer l'id trick path 'nom de la route', {param ID}) }} -->
-            <a href="#" class="btn btn-primary btn-card stretched-link">Détail</a>
+            <a href="{{ path('trick_show',{'id': trick.id}) }}" class="btn btn-primary btn-card stretched-link">En savoir plus</a>
           </div>
         </div>
       </div>
-
-      <div class="shadow col-sm-6 col-md-4 col-lg-3 mb-3">
-        <div class="card col-md-12 p-0">
-          <img class="card-img-top" src="https://picsum.photos/400/302" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title">Trick title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-              content.</p>
-            <a href="#" class="btn btn-card stretched-link">Détail</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="shadow col-sm-6 col-md-4 col-lg-3 mb-3">
-        <div class="card col-md-12 p-0">
-          <img class="card-img-top" src="https://picsum.photos/400/303" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title">Trick title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-              content.</p>
-            <a href="#" class="btn btn-card stretched-link">Détail</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="shadow col-sm-6 col-md-4 col-lg-3 mb-3">
-        <div class="card col-md-12 p-0">
-          <img class="card-img-top" src="https://picsum.photos/400/304" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title">Trick title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-              content.</p>
-            <a href="#" class="btn btn-card stretched-link">Détail</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="shadow col-sm-6 col-md-4 col-lg-3 mb-3">
-        <div class="card col-md-12 p-0">
-          <img class="card-img-top" src="https://picsum.photos/400/305" alt="Card image cap">
-          <div class="card-body">
-            <h5 class="card-title">Trick title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-              content.</p>
-            <a href="#" class="btn btn-card stretched-link">Détail</a>
-          </div>
-        </div>
-      </div>
-
+        {% endfor %}
+      <!-- balise fermeture boucle -->
     </div>
+
   </div>
+
 {% endblock %}
