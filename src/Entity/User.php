@@ -68,7 +68,7 @@ class User
         $this->createdAt = new \DateTime('now');
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->username;
     }

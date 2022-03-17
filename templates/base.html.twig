@@ -19,6 +19,7 @@
   {% endblock %}
 </head>
 <body>
+
 <header>
 
   <nav class="navbar navbar-expand-lg navbar-dark blue-background">
@@ -40,7 +41,19 @@
   </nav>
 </header>
 
+
 {% block body %}{% endblock %}
+
+{% for message in app.flashes('success') %}
+  <div class="alert alert-success">
+      {{ message }}
+  </div>
+{% endfor %}
+{% for message in app.flashes('notice') %}
+  <div class="alert alert-notice">
+      {{ message }}
+  </div>
+{% endfor %}
 
 <footer class="mt-5">
   <div class="container">

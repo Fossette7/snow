@@ -9,8 +9,9 @@
 
             <h1>Figure: {{ trick.name }}</h1>
                 <img src="https://picsum.photos/800/365" alt="img card"/>
-
-
+                {% for image in trick  %}
+                <img src="{{ image.trick }}"/>
+                {% endfor %}
             <h3> {{ trick.description }}</h3>
 
             <p>{{ trick.createdAt ? trick.createdAt|date('d-m-Y') : '' }}</p>

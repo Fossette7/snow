@@ -43,8 +43,16 @@ class TrickController extends AbstractController
     }
 
     #[Route('/{id}', name: 'trick_show', methods: ['GET'])]
-    public function show(Trick $trick): Response
+    public function show(Trick $trick=null): Response
     {
+        //if $trick is null redirect
+        if($trick === null){
+            $this->addFlash(
+            'notice', 'Invalid parameter'
+            );
+            return $this->redirectToRoute('trick_index');
+        }
+
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,
         ]);
