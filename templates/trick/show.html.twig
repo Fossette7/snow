@@ -8,13 +8,17 @@
         <section class="text-center">
 
             <h1>Figure: {{ trick.name }}</h1>
+
                 <img src="https://picsum.photos/800/365" alt="img card"/>
                 {% for image in trick  %}
                 <img src="{{ image.trick }}"/>
                 {% endfor %}
-            <h3> {{ trick.description }}</h3>
+            <div class="d-flex flex-row offset-2">
 
-            <p>{{ trick.createdAt ? trick.createdAt|date('d-m-Y') : '' }}</p>
+                <div class="p-2"><span class="badge bg-secondary">{{ trick.category.name }}</span></div>
+                <div class="p-2"><p>Ecrit le <small>{{ trick.createdAt ? trick.createdAt|date('d-m-Y') : '' }}</small></p></div>
+            </div>
+            <h3> {{ trick.description }}</h3>
 
             <p>écrit par: {{ trick.author.username }}</p>
 
