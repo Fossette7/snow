@@ -5,10 +5,11 @@ namespace App\Form;
 use App\Entity\Category;
 use App\Entity\Trick;
 
+use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -24,12 +25,14 @@ class TrickType extends AbstractType
             ->add('createdAt',DateType::class,[
                 'label'=>'écrit le'
             ])
+            ->add ('description', TextareaType::class)
+
             ->add('category', EntityType::class,[
                 'class' => Category::class,
                 ])
 
-            ->add('author', TextType::class,[
-                'label'=>'Rider-Auteur'
+            ->add('author', EntityType::class,[
+                'class'=> User::class
         ])
         ;
     }
@@ -38,6 +41,8 @@ class TrickType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Trick::class,
+            'csrf_protection' => false,
+            'csrf_field_name' => '_token'
         ]);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Trick;
 use App\Form\TrickType;
 use App\Repository\TrickRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,22 +24,27 @@ class TrickController extends AbstractController
     }
 
     #[Route('/new', name: 'trick_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, ManagerRegistry $doctrine): Response
     {
         $trick = new Trick();
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $trick = $form->getData();
+            $entityManager = $doctrine->getManager();
             $entityManager->persist($trick);
             $entityManager->flush();
+
+            $this->addFlash('success', 'Votre trick est bien ajouté');
 
             return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('trick/new.html.twig', [
+        return $this->render('trick/new.html.twig', [
             'trick' => $trick,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -76,7 +82,7 @@ class TrickController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'trick_delete', methods: ['POST'])]
+    #[Route('/{id}/', name: 'trick_delete', methods: ['POST'])]
     public function delete(Request $request, Trick $trick, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$trick->getId(), $request->request->get('_token'))) {
