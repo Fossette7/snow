@@ -57,6 +57,7 @@ class Trick
 
     public function __construct()
     {
+        $this->createdAt = new \DateTime('now');
         $this->image = new ArrayCollection();
     }
 

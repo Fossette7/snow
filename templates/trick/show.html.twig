@@ -23,9 +23,11 @@
             <p>écrit par: {{ trick.author.username }}</p>
 
         </section>
-            <a href="{{ path('trick_index') }}">back to list</a>
+            <div class="d-flex row">
+                <div class="row p-3"><a href="{{ path('trick_index') }}" class="btn btn-outline-dark">Retour à la liste</a></div>
 
-            <a href="{{ path('trick_edit', {'id': trick.id}) }}">edit</a>
+                <div class="row p-3"><a href="{{ path('trick_edit', {'id': trick.id}) }}" class="btn btn-warning">Modifier</a></div>
+            </div>
 
             {{ include('trick/_delete_form.html.twig') }}
     </div>
