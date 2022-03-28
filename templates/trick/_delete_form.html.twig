@@ -1,4 +1,5 @@
 <form method="post" action="{{ path('trick_delete', {'id': trick.id}) }}" onsubmit="return confirm('Etes-vous sûr de vouloir supprimer ce post?');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trick.id) }}">
-    <button class="btn btn-danger">Supprimer</button>
+
+    <a href="{{ path('trick_delete', {'id': trick.id}) }}" class="btn btn-danger m-2" type="submit">Supprimer</a>
 </form>

@@ -36,7 +36,12 @@ footer {
 .fa.fa-github, .fa.fa-instagram, .fa.fa-facebook, :hover {
     color: #000000;
 }
+
 a:hover{
     color:#000000;
     cursor: pointer;
+}
+
+a.trick-title{
+    text-decoration: none;
 }

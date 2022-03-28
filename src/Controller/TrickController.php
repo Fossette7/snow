@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Trick;
+use App\Form\CommentType;
 use App\Form\TrickType;
 use App\Repository\TrickRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -49,7 +51,7 @@ class TrickController extends AbstractController
     }
 
     #[Route('/{id}', name: 'trick_show', methods: ['GET'])]
-    public function show(Trick $trick=null): Response
+    public function show(Request $request, Trick $trick=null): Response
     {
         //if $trick is null redirect
         if($trick === null){
@@ -58,9 +60,15 @@ class TrickController extends AbstractController
             );
             return $this->redirectToRoute('trick_index');
         }
+        //commentaires
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
 
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,
+            'form' => $form->createView()
         ]);
     }
 
@@ -73,6 +81,8 @@ class TrickController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
+            $this->addFlash('success', 'Votre trick est bien modifié');
+
             return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -82,7 +92,7 @@ class TrickController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/', name: 'trick_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'trick_delete', methods: ['POST'])]
     public function delete(Request $request, Trick $trick, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$trick->getId(), $request->request->get('_token'))) {

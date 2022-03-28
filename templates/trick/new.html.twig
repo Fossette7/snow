@@ -1,11 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Trick{% endblock %}
+{% block title %}Création{% endblock %}
 
 {% block body %}
-    <h1>Nouveau trick</h1>
+    <div class="container">
+        <h1 class="m-2">Ajouter une figure</h1>
 
-    {{ include('trick/_form.html.twig') }}
+            {{ form_start(form) }}
+                {{ include('trick/_form.html.twig') }}
 
-    <a href="{{ path('trick_index') }}" class="btn btn-outline-secondary" >Retour à la liste</a>
+                <a href="{{ path('trick_index') }}" class="btn btn-outline-secondary m-2" >Retour à la liste</a>
+            {{ form_end(form) }}
+    </div>
 {% endblock %}

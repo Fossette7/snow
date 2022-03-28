@@ -24,10 +24,12 @@ class TrickType extends AbstractType
             ->add ('description', TextareaType::class)
 
             ->add('category', EntityType::class,[
+                'label'=>'Categorie',
                 'class' => Category::class,
                 ])
 
             ->add('author', EntityType::class,[
+                'label'=>'Auteur',
                 'class'=> User::class
         ])
         ;
@@ -38,7 +40,8 @@ class TrickType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Trick::class,
             'csrf_protection' => false,
-            'csrf_field_name' => '_token'
+            'csrf_field_name' => '_token',
+            'csrf_token_id'   => 'trick_item',
         ]);
     }
 }

@@ -10,6 +10,7 @@ use Faker;
 
 class TrickFixtures extends Fixture implements DependentFixtureInterface
 {
+    public const TRICK_REFERENCE = 'trick-ref';
 
     public function load(ObjectManager $manager): void
     {

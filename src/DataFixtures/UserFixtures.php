@@ -9,6 +9,8 @@ use Faker;
 
 class UserFixtures extends Fixture
 {
+    public const USER_REFERENCE = 'user-ref';
+
     public function load(ObjectManager $manager): void
     {
         // $product = new Product();
