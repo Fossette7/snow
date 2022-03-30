@@ -17,6 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/trick')]
 class TrickController extends AbstractController
 {
+
     #[Route('/', name: 'trick_index', methods: ['GET'])]
     public function index(TrickRepository $trickRepository): Response
     {
@@ -50,25 +51,46 @@ class TrickController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'trick_show', methods: ['GET'])]
-    public function show(Request $request, Trick $trick=null): Response
+    #[Route('/{id}', name: 'trick_show', methods: ['GET','POST'])]
+    public function show(Request $request, ManagerRegistry $doctrine, Trick $trick=null): Response
     {
-        //if $trick is null redirect
-        if($trick === null){
-            $this->addFlash(
-            'notice', 'Invalid parameter'
-            );
-            return $this->redirectToRoute('trick_index');
-        }
-        //commentaires
-        $comment = new Comment();
-        $form = $this->createForm(CommentType::class, $comment);
-        $form->handleRequest($request);
+            //if $trick is null redirect
+            if($trick === null){
+                $this->addFlash(
+                'notice', 'Invalid parameter'
+                );
+
+                return $this->redirectToRoute('trick_index');
+            }
+
+            //new comments
+
+            $comment = new Comment();
+
+            $comment->setTrick($trick);
+
+            $form = $this->createForm(CommentType::class, $comment);
+            $form->handleRequest($request);
+
+            //form
+          if ($form->isSubmitted() && $form->isValid()) {
+
+            $comment= $form->getData();
+            $entityManager= $doctrine->getManager();
+
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+
+            $this->addFlash('message', 'Votre commentaire a bien été ajouté');
+
+              return $this->redirectToRoute('trick_show', ['id'=>$trick->getId()]);
+          }
 
 
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,
-            'form' => $form->createView()
+            'formComment'=> $form->createView(),
         ]);
     }
 
