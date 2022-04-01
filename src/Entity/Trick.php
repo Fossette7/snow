@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Repository\TrickRepository;
+use   App\Repository\TrickRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Collection;
@@ -59,6 +59,11 @@ class Trick
      */
     private $comments;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
+
 
     public function __construct()
     {
@@ -67,7 +72,8 @@ class Trick
         $this->comments = new ArrayCollection();
     }
 
-    public function getId(): ?int
+
+  public function getId(): ?int
     {
         return $this->id;
     }
@@ -200,4 +206,18 @@ class Trick
 
         return $this;
     }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+
 }

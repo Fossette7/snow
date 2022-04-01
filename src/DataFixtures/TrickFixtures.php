@@ -6,10 +6,19 @@ use App\Entity\Trick;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Faker;
 
 class TrickFixtures extends Fixture implements DependentFixtureInterface
 {
+    public const TRICK_REFERENCE = 'trick-ref';
+
+    protected $slugger;
+
+    public function __construct(SluggerInterface $slugger)
+    {
+        $this->slugger = $slugger;
+    }
 
     public function load(ObjectManager $manager): void
     {
@@ -39,8 +48,9 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface
             $trick->setName($tricksName[$i]);
             $trick->setCreatedAt(new \DateTime());
             $trick->setCategory($this->getReference(CategoryFixtures::CATEGORY_REFERENCE.'-'.$catTrickAsso[$i]));
-            $trick->setAuthor($this->getReference('ADMIN_USER'));
+            $trick->setAuthor($this->getReference('USER_REFERENCE'));
             $trick->setDescription('lorem ipsum in vocate');
+            $trick->setSlug(strtolower($this->slugger->slug($trick->getName())));
             $manager->persist($trick);
             $manager->flush();
 

@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Trick;
+use App\Form\CommentType;
 use App\Form\TrickType;
 use App\Repository\TrickRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -15,6 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/trick')]
 class TrickController extends AbstractController
 {
+
     #[Route('/', name: 'trick_index', methods: ['GET'])]
     public function index(TrickRepository $trickRepository): Response
     {
@@ -48,19 +51,46 @@ class TrickController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'trick_show', methods: ['GET'])]
-    public function show(Trick $trick=null): Response
+    #[Route('/{id}', name: 'trick_show', methods: ['GET','POST'])]
+    public function show(Request $request, ManagerRegistry $doctrine, Trick $trick=null): Response
     {
-        //if $trick is null redirect
-        if($trick === null){
-            $this->addFlash(
-            'notice', 'Invalid parameter'
-            );
-            return $this->redirectToRoute('trick_index');
-        }
+            //if $trick is null redirect
+            if($trick === null){
+                $this->addFlash(
+                'notice', 'Invalid parameter'
+                );
+
+                return $this->redirectToRoute('trick_index');
+            }
+
+            //new comments
+
+            $comment = new Comment();
+
+            $comment->setTrick($trick);
+
+            $form = $this->createForm(CommentType::class, $comment);
+            $form->handleRequest($request);
+
+            //form
+          if ($form->isSubmitted() && $form->isValid()) {
+
+            $comment= $form->getData();
+            $entityManager= $doctrine->getManager();
+
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+
+            $this->addFlash('message', 'Votre commentaire a bien été ajouté');
+
+              return $this->redirectToRoute('trick_show', ['id'=>$trick->getId()]);
+          }
+
 
         return $this->render('trick/show.html.twig', [
             'trick' => $trick,
+            'formComment'=> $form->createView(),
         ]);
     }
 
@@ -73,6 +103,8 @@ class TrickController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
+            $this->addFlash('success', 'Votre trick est bien modifié');
+
             return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -82,7 +114,7 @@ class TrickController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/', name: 'trick_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'trick_delete', methods: ['POST'])]
     public function delete(Request $request, Trick $trick, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$trick->getId(), $request->request->get('_token'))) {

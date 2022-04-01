@@ -9,6 +9,8 @@ use Faker;
 
 class UserFixtures extends Fixture
 {
+    public const USER_REFERENCE = 'user-ref';
+
     public function load(ObjectManager $manager): void
     {
         // $product = new Product();
@@ -29,6 +31,7 @@ class UserFixtures extends Fixture
             $manager->persist($user);
 
             $manager->flush();
-            $this->addReference('ADMIN_USER', $user);
+
+            $this->addReference(self::USER_REFERENCE, $user);
     }
 }
