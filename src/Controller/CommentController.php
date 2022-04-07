@@ -19,7 +19,7 @@ class CommentController extends AbstractController
         ]);
     }
 
-  #[Route('/{id}', name: 'comment_delete', methods: ['POST'])]
+  #[Route('/{id}/delete', name: 'comment_delete', methods: ['POST'])]
   public function delete(Request $request, Comment $comment, EntityManagerInterface $entityManager): Response
   {
     if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {

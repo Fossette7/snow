@@ -16,8 +16,8 @@
                             {# A ajouter: visible que si connecté #}
                             {% if trick.author.username is defined %}
                                 <div class="icon offset-10 col-2">
-                                    <i class="fas fa-pencil-alt"></i>
-                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                    <a href="{{ path('trick_edit', {'id': trick.id}) }}"><i class="fas fa-pencil-alt"></i></a>
+                                    <a href="{{ path('trick_delete',{'id': trick.id}) }}"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                 </div>
                              {% endif %}
                             <h4 class="card-title">{{ trick.name|capitalize }}</h4>

@@ -6,12 +6,16 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
+ * @UniqueEntity(fields={"email"}, message="Un compte existe déjà avec cet email")
  */
-class User
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
      * @ORM\Id
@@ -42,9 +46,9 @@ class User
     private $createdAt;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="json")
      */
-    private $role;
+    private $roles;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -52,12 +56,13 @@ class User
     private $avatar;
 
     /**
+     * @var string The hashed password
      * @ORM\Column(type="string", length=255)
      */
     private $password;
 
     /**
-     * @ORM\OneToMany(targetEntity=Trick::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Trick::class, mappedBy="author")
      */
     private $tricks;
 
@@ -72,6 +77,7 @@ class User
         $this->trick = new ArrayCollection();
         $this->createdAt = new \DateTime('now');
         $this->comments = new ArrayCollection();
+        $this->active = true;
     }
 
     public function __toString(): string
@@ -108,6 +114,17 @@ class User
         return $this;
     }
 
+    /**
+     * The public representation of the user (e.g. a username, an email address, etc.)
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+      return (string) $this->email;
+    }
+
+
     public function getActive(): ?bool
     {
         return $this->active;
@@ -132,14 +149,22 @@ class User
         return $this;
     }
 
-    public function getRole(): ?string
+    /**
+     * @see UserInterface
+     */
+
+    public function getRoles(): array
     {
-        return $this->role;
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER (check doc)
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
     }
 
-    public function setRole(string $role): self
+    public function setRoles(array $roles): self
     {
-        $this->role = $role;
+        $this->roles = $roles;
 
         return $this;
     }
@@ -156,7 +181,10 @@ class User
         return $this;
     }
 
-    public function getPassword(): ?string
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -169,6 +197,27 @@ class User
     }
 
     /**
+     * Returning a salt is only needed, if you are not using a modern
+     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
+     *
+     * @see UserInterface
+     */
+    public function getSalt(): ?string
+    {
+      // TODO: Implement getSalt() method.
+      return null;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+      // TODO: Implement eraseCredentials() method.
+    }
+
+
+  /**
      * @return Collection|Trick[]
      */
     public function getTricks(): Collection

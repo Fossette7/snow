@@ -5,6 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Site pour les passionnés de snowbord">
   <title>{% block title %}Bienvenue!{% endblock %}</title>
+
+  <!-- Message flash -->
+  {% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+      {{ message }}
+    </div>
+  {% endfor %}
+  {% for message in app.flashes('notice') %}
+    <div class="alert alert-notice">
+      {{ message }}
+    </div>
+  {% endfor %}
+  <!-- Fin Message flash -->
+
   <!-- Custom styles for this template -->
   <link rel="icon" type="image/png" href="{{ asset('dist/picture/logo.ico.png') }}">
   {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
@@ -20,21 +34,30 @@
 </head>
 <body>
 
-<header>
+    <header>
 
   <nav class="navbar navbar-expand-lg navbar-dark blue-background">
     <div class="container">
-      <a href="{{ path('home') }}"><img src="{{ asset('dist/picture/logo.ico.png') }}" class="navbar-brand"></a>
+      <a href="{{ path('home') }}"><img src="{{ asset('dist/picture/logo.ico.png') }}" alt="logo snowtricks" class="navbar-brand"></a>
       <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav">
-          <a href="{{ path('home') }}" class="nav-item nav-link active">Accueil</a>
-          <a href="{{ path('trick_index') }}" class="nav-item nav-link" tabindex="-1">Tricks</a>
-        </div>
-        <div class="navbar-nav ms-auto">
-          <button type="button" class="btn btn-light-blue"><i class="fas fa fa-user"></i> Connexion</button>
+
+              <a href="{{ path('home') }}" class="nav-item nav-link active">Accueil</a>
+              <a href="{{ path('trick_index') }}" class="nav-item nav-link" tabindex="-1">Tricks</a>
+            </div>
+            <div class="navbar-nav ms-auto">
+              <a href="{{ path('app_login') }}" class="btn btn-light-blue me-3" type="button"><i class="fas fa fa-user">
+                </i> Connexion</a>
+
+              <a href="{{ path('register') }}" class="btn btn-light-blue me-3" type="button"><i class="fas fa fa-user">
+                  </i>Enregistrement</a>
+              {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <a class="link" href="{{ path('app_logout') }}">Logout</a>
+              {% endif %}
+
         </div>
       </div>
     </div>
@@ -44,16 +67,6 @@
 
 {% block body %}{% endblock %}
 
-{% for message in app.flashes('success') %}
-  <div class="alert alert-success">
-      {{ message }}
-  </div>
-{% endfor %}
-{% for message in app.flashes('notice') %}
-  <div class="alert alert-notice">
-      {{ message }}
-  </div>
-{% endfor %}
 
 <footer class="mt-5">
   <div class="container">
