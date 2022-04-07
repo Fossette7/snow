@@ -5,15 +5,18 @@
 {% block monTitre %}<h1>Enregistrement</h1>{% endblock %}
 {% block body %}
 
+    <div class="container">
+        {{ form_start(registrationForm) }}
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.username) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+            {{ form_row(registrationForm.username) }}
+            {{ form_row(registrationForm.email) }}
+            {#{{ form_row(registrationForm.avatar) }}#}
+            {{ form_row(registrationForm.plainPassword, {
+                label: 'Password'
+            }) }}
+            {{ form_row(registrationForm.RGPD) }}
 
-        <button type="submit" class="btn btn-primary">Enregistrement</button>
-    {{ form_end(registrationForm) }}
+            <button type="submit" class="btn btn-primary">Enregistrement</button>
+        {{ form_end(registrationForm) }}
+    </div>
 {% endblock %}

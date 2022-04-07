@@ -1,6 +1,7 @@
 <div class="container">
 {{ form_start(form) }}
     {{ form_row(form.name) }}
+    {#{{ form_row(form.image) }}#}
     {{ form_row(form.description) }}
     {{ form_rest(form) }}
 <button class="btn btn-success mb-3">{{ button_label|default('Enregistrer') }}</button>

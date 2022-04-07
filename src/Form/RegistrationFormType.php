@@ -21,8 +21,11 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('username',TextType::class,[
         'label'=>'Pseudo'])
-            ->add('email', EmailType::class)
-            ->add('agreeTerms', CheckboxType::class, [
+            ->add('email', EmailType::class,[
+              'label'=>'E-mail'
+            ])
+            ->add('RGPD', CheckboxType::class, [
+                'label'=> 'J\'accepte que mes données soient conservées dans notre base de données.',
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
@@ -37,7 +40,7 @@ class RegistrationFormType extends AbstractType
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a password',
+                        'message' => 'Entrez un Mot de passe, ce champs ne peut être vide',
                     ]),
                     new Length([
                         'min' => 6,

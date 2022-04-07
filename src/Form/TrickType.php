@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+
 class TrickType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -39,7 +40,7 @@ class TrickType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Trick::class,
-            'csrf_protection' => false,
+            'csrf_protection' => true,
             'csrf_field_name' => '_token',
             'csrf_token_id'   => 'trick_item',
         ]);

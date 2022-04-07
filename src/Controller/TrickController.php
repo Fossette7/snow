@@ -51,7 +51,7 @@ class TrickController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'trick_show', methods: ['GET','POST'])]
+    #[Route('/{id}', name: 'trick_show', methods: ['GET', 'POST'])]
     public function show(Request $request, ManagerRegistry $doctrine, Trick $trick=null): Response
     {
             //if $trick is null redirect
@@ -64,19 +64,17 @@ class TrickController extends AbstractController
             }
 
             //new comments
-
             $comment = new Comment();
-
-            $comment->setTrick($trick);
-
             $form = $this->createForm(CommentType::class, $comment);
             $form->handleRequest($request);
 
-            //form
+            //form comment
           if ($form->isSubmitted() && $form->isValid()) {
-
+            $comment->setTrick($trick);
             $comment= $form->getData();
+            /*$comment->setAuthor($this->getUser());*/
             $entityManager= $doctrine->getManager();
+
 
             $entityManager->persist($comment);
             $entityManager->flush();
@@ -114,7 +112,7 @@ class TrickController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'trick_delete', methods: ['POST'])]
+    #[Route('/{id}/delete', name: 'trick_delete', methods:['GET', 'DELETE']) ]
     public function delete(Request $request, Trick $trick, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$trick->getId(), $request->request->get('_token'))) {

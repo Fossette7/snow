@@ -22,9 +22,11 @@ class CommentType extends AbstractType
                 'class'=> 'form-control'
               ]
             ])
-            ->add('author', EntityType::class,[
-                'label'=>'Auteur',
-                'class'=> User::class
+
+           ->add('author', EntityType::class,[
+                'label'=> false,
+                'class'=> User::class,
+                'choice_label' => 'Username',
               ]);
     }
 
@@ -32,7 +34,10 @@ class CommentType extends AbstractType
     {
         $resolver->setDefaults([
             // Configure your form options here
-           'data_class'=> Comment::class,
+            'data_class'=> Comment::class,
+            'csrf_protection' => true,
+            'csrf_field_name' =>'_token',
+            'csrf_token_id' => 'trick_item',
         ]);
     }
 }
