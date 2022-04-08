@@ -72,7 +72,7 @@ class TrickController extends AbstractController
           if ($form->isSubmitted() && $form->isValid()) {
             $comment->setTrick($trick);
             $comment= $form->getData();
-            /*$comment->setAuthor($this->getUser());*/
+            $comment->setAuthor($this->getUser());
             $entityManager= $doctrine->getManager();
 
 
@@ -112,7 +112,7 @@ class TrickController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/delete', name: 'trick_delete', methods:['GET', 'DELETE']) ]
+    #[Route('/{id}/delete', name: 'trick_delete', methods:['GET', 'POST']) ]
     public function delete(Request $request, Trick $trick, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$trick->getId(), $request->request->get('_token'))) {

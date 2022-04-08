@@ -5,20 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="Site pour les passionnés de snowbord">
   <title>{% block title %}Bienvenue!{% endblock %}</title>
-
-  <!-- Message flash -->
-  {% for message in app.flashes('success') %}
-    <div class="alert alert-success">
-      {{ message }}
-    </div>
-  {% endfor %}
-  {% for message in app.flashes('notice') %}
-    <div class="alert alert-notice">
-      {{ message }}
-    </div>
-  {% endfor %}
-  <!-- Fin Message flash -->
-
+    <!-- Message flash -->
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('notice') %}
+        <div class="alert alert-notice">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <!-- Fin Message flash -->
   <!-- Custom styles for this template -->
   <link rel="icon" type="image/png" href="{{ asset('dist/picture/logo.ico.png') }}">
   {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
@@ -49,13 +47,15 @@
               <a href="{{ path('trick_index') }}" class="nav-item nav-link" tabindex="-1">Tricks</a>
             </div>
             <div class="navbar-nav ms-auto">
-              <a href="{{ path('app_login') }}" class="btn btn-light-blue me-3" type="button"><i class="fas fa fa-user">
-                </i> Connexion</a>
+                    <a href="{{ path('register') }}" class="btn btn-light-blue me-3" type="button"><i class="fas fa fa-user">
+                        </i>Enregistrement</a>
 
-              <a href="{{ path('register') }}" class="btn btn-light-blue me-3" type="button"><i class="fas fa fa-user">
-                  </i>Enregistrement</a>
-              {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                 <a class="link" href="{{ path('app_logout') }}">Logout</a>
+                {% else %}
+                    <a href="{{ path('app_login') }}" class="btn btn-light-blue me-3" type="button"><i class="fas fa fa-user">
+                        </i> Connexion</a>
               {% endif %}
 
         </div>
@@ -63,7 +63,6 @@
     </div>
   </nav>
 </header>
-
 
 {% block body %}{% endblock %}
 
