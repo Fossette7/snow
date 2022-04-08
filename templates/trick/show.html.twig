@@ -53,7 +53,7 @@
                                 {% if app.user.email is defined and comment.author.email == app.user.email %}
                             <div class="icon offset-10 col-2 md-3">
                                 <a href="#"><i class="fas fa-pencil-alt"></i></a>
-                                <a href="{{ path('comment_delete', {'id':comment.id}) }}"
+                                <a href="{{ path('comment_delete', {'id': comment.id}) }}"
                                    type="submit"><i class="fa fa-trash" aria-hidden="true"></i></a>
                             </div>
                             </span>
