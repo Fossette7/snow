@@ -20,7 +20,7 @@ security:
             security: false
         main:
             lazy: true
-            provider: users_in_memory
+            provider: app_user_provider
             entry_point: form_login
             form_login:
                 login_path: app_login
@@ -28,7 +28,7 @@ security:
                 username_parameter: email
                 password_parameter: password
                 enable_csrf: true
-            custom_authenticator: App\Security\AuthenAuthenticator
+            custom_authenticator: App\Security\LoginFormAuthenticator
             logout:
                 path: app_logout
                 # where to redirect after logout
@@ -43,6 +43,6 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/login, roles: PUBLIC_ACCESS }
         # - { path: ^/admin, roles: ROLE_ADMIN }
-         - { path: ^/user, roles: ROLE_USER }
+         - { path: ^/user, roles: PUBLIC_ACCESS }
