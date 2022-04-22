@@ -18,13 +18,16 @@ class ImageType extends AbstractType
             ->add('trick')
             ->add('image',FileType::class, [
               'label' => 'Votre image',
+              'multiple'=> true,
               'mapped' => false,
               'required' => false,
               'constraints' => [
                 new File([
                   'maxSize' => '1024k',
                   'mimeTypes' => [
-                    'application/jpg'
+                    'image/jpg',
+                    'image/jpeg',
+                    'image/png',
                   ],
                   'mimeTypesMessage' => 'Please upload a valid document',
                 ])

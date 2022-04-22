@@ -3,9 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
+use App\Entity\Image;
 use App\Entity\Trick;
 use App\Form\CommentType;
 use App\Form\TrickType;
+use App\Service\FileUploader;
+
 use App\Repository\TrickRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
@@ -13,6 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 #[Route('/trick')]
 class TrickController extends AbstractController
@@ -26,16 +30,45 @@ class TrickController extends AbstractController
         ]);
     }
 
+    #[Route('/all/{pageActuelle?1}/{pageNumber?10}', name: 'trick_index_all', methods: ['GET'])]
+    public function indexAll(ManagerRegistry $doctrine, $pageActuelle, $pageNumber): Response
+    {
+      $repository = $doctrine->getRepository(Trick::class);
+
+      $nbTricks = $repository->count([]);
+      $tricks = $repository->findBy([],['createdAt'=>'DESC'], $pageNumber, ($pageActuelle - 1) * $pageNumber);
+
+
+      $totalPages = ceil($nbTricks / $pageNumber);
+
+      return $this->render('trick/index.html.twig', [
+        'tricks' => $tricks,
+        'totalPages' => $totalPages,
+        'pageActuelle' => $pageActuelle,
+      ]);
+    }
+
     #[Route('/new', name: 'trick_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ManagerRegistry $doctrine): Response
+    public function new(Request $request, ManagerRegistry $doctrine, FileUploader $fileUploader, TokenStorageInterface $tokenStorage): Response
     {
         $trick = new Trick();
+        //accès à new que pour les user connectés mettre message et bloquer accès
+        $trick->setAuthor($tokenStorage->getToken()->getUser());
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $trick = $form->getData();
+            $imagesFile = $form->get('image')->getData();
+              foreach ($imagesFile as $oneImageFile){
+                if ($oneImageFile) {
+                  $imageFileName = $fileUploader->upload($oneImageFile);
+                  $img = new Image();
+                  $img->setName($imageFileName);
+                  $trick->addImage($img);
+                }
+          }
+
             $entityManager = $doctrine->getManager();
             $entityManager->persist($trick);
             $entityManager->flush();
@@ -99,6 +132,7 @@ class TrickController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $entityManager->flush();
 
             $this->addFlash('success', 'Votre trick est bien modifié');
