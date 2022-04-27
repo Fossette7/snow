@@ -9,6 +9,16 @@ body {
 }
 
 /** Home page **/
+.ct-header{
+    padding-left: 0;
+    padding-right: 0;
+}
+.img-fluid{
+    max-width: 100%;
+    height: auto;
+    padding-left: 0;
+    padding-right: 0;
+}
 .btn-card {
     background-color: #023052;
     color: #ffffff;

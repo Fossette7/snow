@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=TrickRepository::class)
- * @UniqueEntity(fields={"name"}, message="Un compte existe déjà avec cet email")
+ * @UniqueEntity(fields={"name"}, message="Cette figure existe déjà dans notre liste")
  */
 class Trick
 {
@@ -34,7 +34,7 @@ class Trick
     private $createdAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="trick")
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="trick",orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $image;
 
@@ -58,6 +58,7 @@ class Trick
 
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="trick", orphanRemoval=true, cascade={"persist"})
+     * @ORM\OrderBy({"createdAt" = "DESC"})
      */
     private $comments;
 
@@ -114,22 +115,23 @@ class Trick
         return $this;
     }
 
-    public function addImage(image $image): self
+    public function addImage(Image $oneImage): self
     {
-        if (!$this->image->contains($image)) {
-            $this->image[] = $image;
-            $image->setTrick($this);
+        if (!$this->image->contains($oneImage)) {
+            $this->image[] = $oneImage;
+            $oneImage->setTrick($this);
         }
 
         return $this;
     }
 
-    public function removeImage(image $image): self
+    public function removeImage(Image $oneImage): self
     {
-        if ($this->image->removeElement($image)) {
+        if ($this->image->contains($oneImage)) {
+            $this->image->removeElement($oneImage);
             // set the owning side to null (unless already changed)
-            if ($image->getTrick() === $this) {
-                $image->setTrick(null);
+            if ($oneImage->getTrick() === $this) {
+              $oneImage->setTrick(null);
             }
         }
 
