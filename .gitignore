@@ -22,3 +22,6 @@
 ### Global ###
 .idea
 .DS_Store
+
+### Remove image ###
+/public/uploads
