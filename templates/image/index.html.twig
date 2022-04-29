@@ -3,18 +3,35 @@
 {% block title %}Hello ImageController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="container">
+        <h1>Liste d'image</h1>
+        <div class="row">
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/Users/bricepeyrat/Project/snow/src/Controller/ImageController.php'|file_link(0) }}">src/Controller/ImageController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/Users/bricepeyrat/Project/snow/templates/image/index.html.twig'|file_link(0) }}">templates/image/index.html.twig</a></code></li>
-    </ul>
-</div>
+            {% for image in images %}
+                <div class="card" style="width: 25rem;">
+
+                    <img class="card-img-top col-md-12" alt="{{ image.name }}" src="{{ asset('uploads/images/') ~ image.name }}"/>
+                    <div class="card-body">
+                        <p class="card-text">titre</p>
+                    </div>
+                </div>
+            {% endfor %}
+
+
+
+        </div>
+
+
+            <!-- balise fermeture boucle -->
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+        </nav>
+    </div>
 {% endblock %}

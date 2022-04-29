@@ -22,37 +22,11 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 class TrickController extends AbstractController
 {
 
-    #[Route('/', name: 'trick_index', methods: ['GET'])]
-    public function index(TrickRepository $trickRepository): Response
-    {
-        return $this->render('trick/index.html.twig', [
-            'tricks' => $trickRepository->findAll(),
-        ]);
-    }
-
-    #[Route('/all/{pageActuelle?1}/{pageNumber?10}', name: 'trick_index_all', methods: ['GET'])]
-    public function indexAll(ManagerRegistry $doctrine, $pageActuelle, $pageNumber): Response
-    {
-      $repository = $doctrine->getRepository(Trick::class);
-
-      $nbTricks = $repository->count([]);
-      $tricks = $repository->findBy([],['createdAt'=>'DESC'], $pageNumber, ($pageActuelle - 1) * $pageNumber);
-
-
-      $totalPages = ceil($nbTricks / $pageNumber);
-
-      return $this->render('trick/index.html.twig', [
-        'tricks' => $tricks,
-        'totalPages' => $totalPages,
-        'pageActuelle' => $pageActuelle,
-      ]);
-    }
-
     #[Route('/new', name: 'trick_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ManagerRegistry $doctrine, FileUploader $fileUploader, TokenStorageInterface $tokenStorage): Response
     {
         $trick = new Trick();
-        //accès à new que pour les user connectés mettre message et bloquer accès
+        //accès à new uniquement pour les user connectés / mettre message /et bloquer accès
         $trick->setAuthor($tokenStorage->getToken()->getUser());
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
@@ -84,7 +58,7 @@ class TrickController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'trick_show', methods: ['GET', 'POST'])]
+    #[Route('/{id}/detail', name: 'trick_show', methods: ['GET', 'POST'])]
     public function show(Request $request, ManagerRegistry $doctrine, Trick $trick=null): Response
     {
             //if $trick is null redirect
@@ -126,12 +100,21 @@ class TrickController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'trick_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Trick $trick, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Trick $trick, EntityManagerInterface $entityManager, FileUploader $fileUploader): Response
     {
         $form = $this->createForm(TrickType::class, $trick);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+          $imagesFile = $form->get('image')->getData();
+          foreach ($imagesFile as $oneImageFile){
+            if ($oneImageFile) {
+              $imageFileName = $fileUploader->upload($oneImageFile);
+              $img = new Image();
+              $img->setName($imageFileName);
+              $trick->addImage($img);
+            }
+          }
 
             $entityManager->flush();
 
@@ -156,4 +139,25 @@ class TrickController extends AbstractController
 
         return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
     }
+
+  #[Route('/{currentPage?1}/{nbrByPage?10}', name: 'trick_index', methods: ['GET'])]
+  public function index(ManagerRegistry $doctrine, $currentPage): Response
+  {
+    $repository = $doctrine->getRepository(Trick::class);
+
+    $nbTricks = $repository->count([]);
+
+    $nbrByPage = 12;
+
+    $tricks = $repository->findBy([],['createdAt'=>'DESC'], $nbrByPage, ($currentPage - 1) * $nbrByPage);
+
+    $totalPages = ceil($nbTricks / $nbrByPage);
+
+    return $this->render('trick/index.html.twig', [
+      'tricks' => $tricks,
+      'totalPages' => $totalPages,
+      'currentPage' => $currentPage,
+      'nbrByPage'=> $nbrByPage
+    ]);
+  }
 }

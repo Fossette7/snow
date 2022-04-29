@@ -5,7 +5,7 @@
 {% block body %}
   <div class="container-fluid ct-header">
     <div class="img-header">
-      <img src="{{ asset('dist/picture/header-snow.png') }}" class="img-fluid" alt="Responsive image">
+      <img src="{{ asset('dist/picture/header-snow.1.jpg') }}" class="img-fluid" alt="Responsive image">
     </div>
   </div>
   <div class="jumbotron jumbotron-fluid mb-5">
@@ -24,7 +24,11 @@
     <!-- mettre la boucle for pour afficher les articles en BDD-->
       <div class="shadow col-sm-6 col-md-4 col-lg-3 mb-3">
         <div class="card col-md-12 p-0">
-          <img class="card-img-top" src="https://picsum.photos/400/301" alt="Card image cap">
+          {% for image in trick.image %}
+              <img alt="{{ image.name }}" src="{{ asset('uploads/images/') ~ image.name }}"/>
+          {% else %}
+              <img class="card-img-top" src="{{ asset('dist/picture/no-image.jpeg') }}" alt="Card image cap">
+          {% endfor %}
           <div class="card-body">
             {# A ajouter: visible que si connecté #}
             {% if app.user.email is defined and trick.author.email == app.user.email %}
@@ -40,14 +44,14 @@
 
             <!-- renvoyer l'id trick path 'nom de la route', {param ID}) }} -->
             <div class="col-12">
-              <div class="p-2"><a type="button" class="btn btn-primary" href="{{ path('trick_show',{'id': trick.id}) }}">En savoir plus</a></div>
-              <div class="p-2"><a type="button" class="btn btn-dark" href="{{ path('trick_new') }}">Ajouter nouveau trick</a></div>
+              <div class="mt-2"><a type="button" class="btn btn-primary" href="{{ path('trick_show',{'id': trick.id}) }}">En savoir plus</a></div>
             </div>
           </div>
         </div>
       </div>
         {% endfor %}
       <!-- balise fermeture boucle -->
+      <div class="col offset-10 col-sm-2 mt-4"><a type="button" class="btn btn-light" href="{{ path('trick_index') }}">Plus de tricks --></a></div>
     </div>
 
   </div>
