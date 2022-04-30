@@ -35,6 +35,7 @@ class Trick
 
     /**
      * @ORM\OneToMany(targetEntity=Image::class, mappedBy="trick",orphanRemoval=true, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=true)
      */
     private $image;
 

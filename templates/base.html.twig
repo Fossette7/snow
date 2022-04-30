@@ -50,12 +50,13 @@
                 {% if app.user.username is defined %}
                     <span class="badge badge-pill badge-info me-3">Bonjour {{ app.user.username }}</span>
                 {% endif %}
-                    <a href="{{ path('register') }}" class="btn btn-light-blue me-3" type="button"><i class="fas fa fa-user">
-                        </i>Enregistrement</a>
+
 
                 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                 <a class="link" href="{{ path('app_logout') }}">Logout</a>
                 {% else %}
+                    <a href="{{ path('register') }}" class="btn btn-light-blue me-3" type="button"><i class="fas fa fa-user">
+                        </i>Enregistrement</a>
                     <a href="{{ path('app_login') }}" class="btn btn-light-blue me-3" type="button"><i class="fas fa fa-user">
                         </i> Connexion</a>
               {% endif %}

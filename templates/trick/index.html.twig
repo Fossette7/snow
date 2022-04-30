@@ -7,13 +7,16 @@
     <div class="container">
         <h1>Liste</h1>
         <div class="row">
+            <div class="p-2"><a type="button" class="btn btn-dark" href="{{ path('trick_new') }}">Ajouter nouveau trick</a></div>
             {% for trick in tricks %}
                 <!-- mettre la boucle for pour afficher les articles en BDD-->
                 <div class="shadow col-sm-6 col-md-4 col-lg-3 mb-3">
                     <div class="card col-md-12 p-0">
                         <!--<img class="card-img-top" src="https://picsum.photos/400/301" alt="Card image cap">-->
                         {% for image in trick.image %}
-                        <img alt="{{ image.name }}" src="{{ asset('uploads/images/') ~ image.name }}"/>
+                            <img alt="{{ image.name }}" src="{{ asset('uploads/images/') ~ image.name }}"/>
+                        {% else %}
+                            <img class="card-img-top" src="{{ asset('dist/picture/no-image.jpeg') }}" alt="Card image cap">
                         {% endfor %}
                         <div class="card-body">
                             {# A ajouter: visible que si connecté #}
@@ -32,7 +35,6 @@
                         </div>
                             <div class=" col-12">
                                <div class="p-2"><a type="button" class="btn btn-primary" href="{{ path('trick_show',{'id': trick.id}) }}">En savoir plus</a></div>
-                                <div class="p-2"><a type="button" class="btn btn-dark" href="{{ path('trick_new') }}">Ajouter nouveau trick</a></div>
                             </div>
                     </div>
                 </div>
@@ -43,13 +45,17 @@
         </div>
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
-                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        {% if currentPage > 1  %}
+                            <li class="page-item"><a class="page-link" href="{{ path('trick_index',{'currentPage': currentPage - 1, 'nbrByPage': nbrByPage}) }}">Précédent</a></li>
+                        {% endif %}
+                        {% for i in range(1, totalPages) %}
+                            <li class="page-item"><a class="page-link" href="{{ path('trick_index',{'currentPage': i, 'nbrByPage': nbrByPage}) }}">{{ i }}</a></li>
+                        {% endfor %}
+                        {% if currentPage < totalPages  %}
+                        <li class="page-item"><a class="page-link" href="{{ path('trick_index',{'currentPage': currentPage + 1, 'nbrByPage': nbrByPage}) }}">Suivant</a></li>
+                        {% endif %}
                     </ul>
                 </nav>
-    </div>
+        </div>
 
 {% endblock %}
