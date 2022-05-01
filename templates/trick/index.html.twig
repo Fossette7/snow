@@ -5,7 +5,9 @@
 {% block body %}
 
     <div class="container">
-        <h1>Liste</h1>
+        <div class="img-header mx-auto offset-md-3 col-12 text-center pt-5 pb-5">
+            <h2 class="col">Les meilleures figures</h2>
+        </div>
         <div class="row">
             <div class="p-2"><a type="button" class="btn btn-dark" href="{{ path('trick_new') }}">Ajouter nouveau trick</a></div>
             {% for trick in tricks %}

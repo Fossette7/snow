@@ -10,6 +10,12 @@
 
             {% for image in images %}
                 <div class="card" style="width: 25rem;">
+                    {% if app.user.email is defined and image.trick.author.email ==  app.user.email %}
+                        <div class="icon offset-10 col-2">
+                            <a href="{{ path('image_edit', {'id': image.id}) }}"><i class="fas fa-pencil-alt"></i></a>
+                            <a href="{{ path('image_delete', {'id': image.id}) }}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                        </div>
+                    {% endif %}
 
                     <img class="card-img-top col-md-12" alt="{{ image.name }}" src="{{ asset('uploads/images/') ~ image.name }}"/>
                     <div class="card-body">
