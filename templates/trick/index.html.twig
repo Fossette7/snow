@@ -24,8 +24,14 @@
                             {# A ajouter: visible que si connecté #}
                               {% if app.user.email is defined and trick.author.email ==  app.user.email %}
                                 <div class="icon offset-10 col-2">
-                                    <a href="{{ path('trick_edit', {'id': trick.id}) }}"><i class="fas fa-pencil-alt"></i></a>
-                                    <a href="{{ path('trick_delete', {'id': trick.id}) }}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                    <a href="{{ path('trick_edit', {'id': trick.id}) }}"><i class="btn fas fa-pencil-alt me-2"></i></a>
+
+                                    <form method="post" action="{{ path('trick_delete', {'id': trick.id}) }}"
+                                          onsubmit="return confirm('Etes-vous sûr de vouloir supprimer ce post?');" xmlns="http://www.w3.org/1999/html">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trick.id) }}">
+                                        <button type="submit" class="btn myTrashTrick me-2"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                    </form>
+
                                 </div>
                              {% endif %}
                             <h4 class="card-title">{{ trick.name|capitalize }}</h4>

@@ -1,6 +1,17 @@
 # Snow - P6 - Projet Snowtricks
 
-Installation
+Built by a developper Student, Snowtricks project is a community website to promote
+
+snowboarding. As a user you can learn and share different snowboarding tricks with
+
+the community. You also have the possibility to comment those figures with other users.
+
+## Technologies
+- Html/CSS
+- PHP 8
+- Symfony 5.4
+
+## Installation
 
 Copy the link on GitHub and clone it on your local repository
 https://github.com/Fossette7/snow

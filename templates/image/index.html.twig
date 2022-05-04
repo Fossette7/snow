@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ImageController!{% endblock %}
+{% block title %}Galerie d'image{% endblock %}
 
 {% block body %}
     <div class="container">
@@ -12,14 +12,13 @@
                 <div class="card" style="width: 25rem;">
                     {% if app.user.email is defined and image.trick.author.email ==  app.user.email %}
                         <div class="icon offset-10 col-2">
-                            <a href="{{ path('image_edit', {'id': image.id}) }}"><i class="fas fa-pencil-alt"></i></a>
-                            <a href="{{ path('image_delete', {'id': image.id}) }}"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                            {{ include('image/_delete_form.html.twig')}}
                         </div>
                     {% endif %}
 
                     <img class="card-img-top col-md-12" alt="{{ image.name }}" src="{{ asset('uploads/images/') ~ image.name }}"/>
                     <div class="card-body">
-                        <p class="card-text">titre</p>
+                        <p class="card-text">{{image.trick.name}}</p>
                     </div>
                 </div>
             {% endfor %}

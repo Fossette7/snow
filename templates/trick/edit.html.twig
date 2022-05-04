@@ -3,17 +3,33 @@
 {% block title %}Modification{% endblock %}
 
 {% block body %}
-    <div class="container">
+    <div class="container edit-template">
         <input type="hidden" name="token" value="{{ csrf_token('delete-item') }}"/>
 
         <h1 class="m-2">Modifier une figure</h1>
         {{ form_start(form) }}
 
-            {{ include('trick/_form.html.twig', {'button_label': 'Enregistrer'}) }}
-            {{ include('trick/_delete_form.html.twig') }}
+        {{ include('trick/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+            {{ include('trick/_delete_form.html.twig')}}
 
-            <a href="{{ path('trick_index') }}" class="btn btn-outline-secondary m-2" >Retour à la liste</a>
-
+        <a href="{{ path('trick_index') }}" class="btn btn-outline-secondary m-2">Retour à la liste</a>
         {{ form_end(form) }}
+
+        {% if trick.image | length >= 1 %}
+            <h2>Galerie d'image</h2>
+            <div class="col-12">
+                {% for currentImage in trick.image %}
+                    <div class="col-4">
+                        <a href="{{ path('image_delete', {'id': currentImage.id}) }}" style="color: red; position: relative; top:-30px; right: -140px; font-size: 25px;"><i class="fa fa-times" aria-hidden="true"></i></a>
+                        <img class="col-md-4 img-thumbnail"" alt="{{ currentImage.name }}"
+                             src="{{ asset('uploads/images/') ~ currentImage.name }}"/>
+                    </div
+                {% endfor %}
+            </div>
+                {% else%}
+                    <div class="col-6 m-2">
+                        <h3 class="">Rappel: Ajoute une photo! </h3>
+                    </div>
+        {% endif %}
     </div>
 {% endblock %}

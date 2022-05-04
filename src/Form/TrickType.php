@@ -40,7 +40,7 @@ class TrickType extends AbstractType
               'label' => false,
               'mapped' => false,
               'multiple' => true,
-              'required' => true,
+              'required' => false,
               'constraints' => [
                 new All([
                   new File([

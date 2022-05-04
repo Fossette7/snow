@@ -34,6 +34,7 @@ class TrickController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $imagesFile = $form->get('image')->getData();
+
               foreach ($imagesFile as $oneImageFile){
                 if ($oneImageFile) {
                   $imageFileName = $fileUploader->upload($oneImageFile);
@@ -118,7 +119,7 @@ class TrickController extends AbstractController
 
             $entityManager->flush();
 
-            $this->addFlash('success', 'Votre trick est bien modifié');
+            $this->addFlash('success', 'Votre trick '.$trick->getName().' est bien modifié');
 
             return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
         }

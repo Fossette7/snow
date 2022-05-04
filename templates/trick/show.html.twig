@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    <div class="container">
+    <div class="container showTricks" style="background-color: #ffffff; opacity: 0.98;border-radius: 9px">
         <section class="text-center">
 
             <h1><a class="trick-title" href="{{ path('trick_index') }}">{{ trick.name| capitalize }}</a></h1>
@@ -34,7 +34,7 @@
             <div class="p-2"><a href="{{ path('trick_edit', {'id': trick.id}) }}" class="btn btn-warning">Modifier</a>
             </div>
 
-            {{ include('trick/_delete_form.html.twig') }}
+            {{ include('trick/_delete_form.html.twig',{'button_label':'supprimer'}) }}
             {% endif %}
             <div class="p-2"><a href="{{ path('trick_index') }}" class="btn btn-outline-dark">Retour à la liste</a>
             </div>

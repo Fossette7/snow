@@ -59,6 +59,16 @@ body {
 .blue-background {
     background-color: #22577E;
 }
+.showTricks{
+    background-color: #ffffff;
+    opacity: 0.8;
+    border-radius: 9px;
+}
+.edit-template{
+    background-color: #ffffff;
+    opacity: 0.89;
+    border-radius: 9px;
+}
 
 footer {
     background-color: #22577E;
