@@ -8,7 +8,7 @@ use App\Form\ImageType;
 use App\Repository\ImageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -27,16 +27,15 @@ class ImageController extends AbstractController
 
 
   #[Route('/{id}/delete', name: 'image_delete', methods:['GET', 'POST']) ]
-  public function delete(Request $request, Image $image, EntityManagerInterface $entityManager): Response
+  public function delete(Request $request, Image $image, EntityManagerInterface $entityManager)
   {
       $entityManager->remove($image);
-      $entityManager->flush();
+      $entityManager->flush(
 
       $this->addFlash('warning', 'Votre image est bien supprimée');
 
-    //$route = $request->headers->get('referer');
-    //return new RedirectResponse($referer);
-    return $this->redirectToRoute('image_index', [], Response::HTTP_SEE_OTHER);
+    $route = $request->headers->get('referer');
+    return new RedirectResponse($route);
   }
 
 }

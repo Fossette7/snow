@@ -18,6 +18,8 @@ https://github.com/Fossette7/snow
 
 Open your terminal and run: composer install
 
+use command `git clone`
+
 Create database: php bin/console doctrine:database:create
 
 Open file .env and write username and password for 
