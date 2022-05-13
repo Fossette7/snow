@@ -24,12 +24,16 @@
                 </div>
             </div>
 
+            <div class="embed-responsive embed-responsive-16by9">
+                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/Opg5g4zsiGY" title="YouTube video player"></iframe>
+            </div>
+
             <h3> {{ trick.description|capitalize }}</h3>
 
             <p>écrit par: {{ trick.author.username|capitalize }}</p>
 
         </section>
-         {% if app.user.email is defined %}
+         {% if app.user.email is defined and trick.author.email ==  app.user.email %}
         <div class="show-button">
             <div class="p-2"><a href="{{ path('trick_edit', {'id': trick.id}) }}" class="btn btn-warning">Modifier</a>
             </div>

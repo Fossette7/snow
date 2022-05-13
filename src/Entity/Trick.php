@@ -58,10 +58,15 @@ class Trick
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="trick", orphanRemoval=true, cascade={"persist"})
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="trick", orphanRemoval=true, cascade={"persist", "remove"})
      * @ORM\OrderBy({"createdAt" = "DESC"})
      */
     private $comments;
+
+    /**
+     * @ORM\OneToOne(targetEntity=Video::class, mappedBy="trick", orphanRemoval=true, cascade={"persist", "remove"})
+     */
+    private $video;
 
 
     public function __construct()
@@ -203,6 +208,28 @@ class Trick
                 $comment->setTrick(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getVideo(): ?Video
+    {
+        return $this->video;
+    }
+
+    public function setVideo(?Video $video): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($video === null && $this->video !== null) {
+            $this->video->setTrick(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($video !== null && $video->getTrick() !== $this) {
+            $video->setTrick($this);
+        }
+
+        $this->video = $video;
 
         return $this;
     }

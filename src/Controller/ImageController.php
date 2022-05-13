@@ -30,7 +30,7 @@ class ImageController extends AbstractController
   public function delete(Request $request, Image $image, EntityManagerInterface $entityManager)
   {
       $entityManager->remove($image);
-      $entityManager->flush(
+      $entityManager->flush();
 
       $this->addFlash('warning', 'Votre image est bien supprimée');
 
