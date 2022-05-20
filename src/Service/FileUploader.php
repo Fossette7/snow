@@ -26,11 +26,8 @@ class FileUploader
 
       try{
           $file->move($this->getTargetDirectory(),$fileName);
-
       } catch (FileException $e){
-
-          echo basename($e->getFile());
-
+        echo $e->getMessage();
       }
 
       return $fileName;

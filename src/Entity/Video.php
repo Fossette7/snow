@@ -23,7 +23,7 @@ class Video
     private $url;
 
     /**
-     * @ORM\OneToOne(targetEntity=Trick::class, inversedBy="video", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Trick::class, inversedBy="video", cascade={"persist", "remove"})
      */
     private $trick;
 

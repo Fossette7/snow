@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Entity\Image;
 use App\Entity\Trick;
+use App\Entity\Video;
 use App\Form\CommentType;
 use App\Form\TrickType;
 use App\Service\FileUploader;
@@ -36,29 +37,34 @@ class TrickController extends AbstractController
     $form = $this->createForm(TrickType::class, $trick);
     $form->handleRequest($request);
 
-    if ($form->isSubmitted() && $form->isValid()) {
-
-      $imagesFile = $form->get('image')->getData();
-      if (count($imagesFile) <= 3) {
-        foreach ($imagesFile as $oneImageFile) {
-          if ($oneImageFile) {
-            $imageFileName = $fileUploader->upload($oneImageFile);
-            $img = new Image();
-            $img->setName($imageFileName);
-            $trick->addImage($img);
-          }
-        }
-
-        $entityManager = $doctrine->getManager();
-        $entityManager->persist($trick);
-        $entityManager->flush();
-
-        $this->addFlash('success', 'Votre trick est bien ajouté');
+    if ($form->isSubmitted()) {
+      if (count($form->get('image')->getData()) > 3) {
+        $form->get('image')->addError(new \Symfony\Component\Form\FormError('Merci d\'ajouter 3 photos maximum'));
       } else {
-        throw new Exception("Merci d'ajouter maximum 3 photos.");
-      }
+        if ($form->isValid()) {
+          $imagesFile = $form->get('image')->getData();
+          foreach ($imagesFile as $oneImageFile) {
+            if ($oneImageFile) {
+              $imageFileName = $fileUploader->upload($oneImageFile);
+              $img = new Image();
+              $img->setName($imageFileName);
+              $trick->addImage($img);
+            }
 
-      return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
+            if ($form->isSubmitted() && $form->isValid()) {
+              $video = $form->get('video')->getData();
+            }
+
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($trick);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Votre trick est bien ajouté');
+          }
+
+          return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
+        }
+      }
     }
 
     return $this->render('trick/new.html.twig', [
@@ -115,32 +121,38 @@ class TrickController extends AbstractController
     Trick $trick,
     EntityManagerInterface $entityManager,
     FileUploader $fileUploader
-  ): Response {
+  ): Response
+  {
     $form = $this->createForm(TrickType::class, $trick);
     $form->handleRequest($request);
 
     if ($form->isSubmitted()) {
-      if ($trick->getImage()->count() > 3) {
-        $form->get('image')->addError(new \Symfony\Component\Form\FormError('3 photos maximum'));
-      } else if ($form->isValid()) {
-        $imagesFile = $form->get('image')->getData();
-        if (count($imagesFile) <= 3) {
-          foreach ($imagesFile as $oneImageFile) {
-            if ($oneImageFile) {
-              $imageFileName = $fileUploader->upload($oneImageFile);
-              $img = new Image();
-              $img->setName($imageFileName);
-              $trick->addImage($img);
+      if($form->get('image')->getData() !== null){
+        $maVal = count($form->get('image')->getData());
+      } else {
+        $maVal = 4;
+      }
+      //catch number of images + images already uploaded
+      if ((count($form->get('image')->getData()??[])) + $trick->getImage()->count() > 3)   {
+        $form->get('image')->addError(new \Symfony\Component\Form\FormError('Merci d\'ajouter 3 photos maximum'));
+      } else {
+        if ($form->isValid()) {
+          $imagesFiles = $form->get('image')->getData();
+          if (count($imagesFiles) <= 3) {
+            foreach ($imagesFiles as $oneImageFile) {
+                $imageFileName = $fileUploader->upload($oneImageFile);
+                $img = new Image();
+                $img->setName($imageFileName);
+                $trick->addImage($img);
             }
-          }
 
-          $entityManager->flush();
+            $entityManager->persist($trick);
+            $entityManager->flush();
 
-          $this->addFlash('success', 'Votre trick '.$trick->getName().' est bien modifié');
-        }
+            $this->addFlash('success', 'Votre trick '.$trick->getName().' est bien modifié');
+          }}
 
-        return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
-
+          return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
       }
     }
 

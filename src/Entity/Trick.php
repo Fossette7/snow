@@ -64,7 +64,8 @@ class Trick
     private $comments;
 
     /**
-     * @ORM\OneToOne(targetEntity=Video::class, mappedBy="trick", orphanRemoval=true, cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity=Video::class, mappedBy="trick", orphanRemoval=true, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=true)
      */
     private $video;
 
@@ -73,6 +74,7 @@ class Trick
     {
         $this->createdAt = new \DateTime('now');
         $this->image = new ArrayCollection();
+        $this->video = new ArrayCollection();
         $this->comments = new ArrayCollection();
     }
 
@@ -212,29 +214,43 @@ class Trick
         return $this;
     }
 
-    public function getVideo(): ?Video
-    {
-        return $this->video;
+
+  /**
+   * @return Collection|video[]
+   */
+  public function getVideo(): ?Video
+  {
+    return $this->video;
+  }
+
+  public function setVideo($video):self
+  {
+    $this->video = $video;
+
+    return $this;
+  }
+
+  public function addVideo(Video $oneVideo): self
+  {
+    if (!$this->video->contains($oneVideo)) {
+      $this->video[] = $oneVideo;
+      $oneVideo->setTrick($this);
     }
 
-    public function setVideo(?Video $video): self
-    {
-        // unset the owning side of the relation if necessary
-        if ($video === null && $this->video !== null) {
-            $this->video->setTrick(null);
-        }
+    return $this;
+  }
 
-        // set the owning side of the relation if necessary
-        if ($video !== null && $video->getTrick() !== $this) {
-            $video->setTrick($this);
-        }
-
-        $this->video = $video;
-
-        return $this;
+  public function removeVideo(Video $oneVideo): self
+  {
+    if ($this->video->contains($oneVideo)) {
+      $this->video->removeElement($oneVideo);
+      // set the owning side to null (unless already changed)
+      if ($oneVideo->getTrick() === $this) {
+        $oneVideo->setTrick(null);
+      }
     }
 
-
-
+    return $this;
+  }
 
 }

@@ -15,11 +15,12 @@
         <a href="{{ path('trick_index') }}" class="btn btn-outline-secondary m-2">Retour à la liste</a>
         {{ form_end(form) }}
 
+        {# Display image galery if picture is existing #}
         {% if trick.image | length >= 1 %}
             <h2>Galerie d'image</h2>
             <div class="col-12">
                 {% for currentImage in trick.image %}
-                    <div class="col-4">
+                    <div class="col-md-4">
                         <a href="{{ path('image_delete', {'id': currentImage.id}) }}" style="color: red; position: relative; top:-30px; right: -140px; font-size: 25px;"><i class="fa fa-times" aria-hidden="true"></i></a>
                         <img class="col-md-4 img-thumbnail"" alt="{{ currentImage.name }}"
                              src="{{ asset('uploads/images/') ~ currentImage.name }}"/>
