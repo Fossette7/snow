@@ -1,19 +1,30 @@
 <div class="container">
-{{ form_start(form) }}
+    {{ form_start(form) }}
     {{ form_row(form.name) }}
+    {{ form_row(form.category) }}
     {{ form_row(form.image) }}
+    <div class="mb-3">
+        <label for="trick_video" class="form-label">Video</label><br/>
+        <div id="video-block"></div>
+        <i id="add-new-video" class="fas fa-plus-circle"></i>
+    </div>
     {{ form_row(form.description) }}
-    <ul>
-        {% for videoField in form.video %}
-            <li>
-                {{ form_errors(videoField) }}
-                {{ form_widget(videoField) }}
-            </li>
-        {% endfor %}
-    </ul>
-    {{ form_row(form.video) }}
-    {{ form_rest(form) }}
-<button class="btn btn-success mb-3">{{ button_label|default('Enregistrer') }}</button>
+    <button class="btn btn-success mb-3">{{ button_label|default('Enregistrer') }}</button>
 
-{{ form_end(form) }}
+    {{ form_end(form) }}
+
+    <div style="display: none" id="video-add">
+        <div class="mb-3">
+            <input type="text" name="trick[video][]" class="form-control">
+        </div>
+    </div>
+    {{ form_rest(form) }}
 </div>
+
+<script type="text/javascript">
+  $('document').ready(function () {
+    $('#add-new-video').click(function () {
+      $("#video-add").children().clone().appendTo("#video-block");
+    })
+  })
+</script>

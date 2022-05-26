@@ -15,6 +15,7 @@ use Doctrine\DBAL\Exception;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -51,8 +52,16 @@ class TrickController extends AbstractController
               $trick->addImage($img);
             }
 
-            if ($form->isSubmitted() && $form->isValid()) {
-              $video = $form->get('video')->getData();
+            $formDate = $request->request->get('trick');
+            if (!empty($formDate['video'])) {
+              $videosUrl = $formDate['video'];
+              foreach ($videosUrl as $oneVideo) {
+                if (!empty($oneVideo)) {
+                  $vid = new Video();
+                  $vid->setUrl($oneVideo);
+                  $trick->addVideo($vid);
+                }
+              }
             }
 
             $entityManager = $doctrine->getManager();
@@ -61,7 +70,6 @@ class TrickController extends AbstractController
 
             $this->addFlash('success', 'Votre trick est bien ajouté');
           }
-
           return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
         }
       }
@@ -71,6 +79,11 @@ class TrickController extends AbstractController
       'trick' => $trick,
       'form' => $form->createView(),
     ]);
+  }
+
+  public function getTargetDirectory()
+  {
+    return $this->targetDirectory;
   }
 
   #[Route('/{id}/detail', name: 'trick_show', methods: ['GET', 'POST'])]
@@ -121,38 +134,38 @@ class TrickController extends AbstractController
     Trick $trick,
     EntityManagerInterface $entityManager,
     FileUploader $fileUploader
-  ): Response
-  {
+  ): Response {
     $form = $this->createForm(TrickType::class, $trick);
     $form->handleRequest($request);
 
     if ($form->isSubmitted()) {
-      if($form->get('image')->getData() !== null){
+      if ($form->get('image')->getData() !== null) {
         $maVal = count($form->get('image')->getData());
       } else {
         $maVal = 4;
       }
       //catch number of images + images already uploaded
-      if ((count($form->get('image')->getData()??[])) + $trick->getImage()->count() > 3)   {
+      if ((count($form->get('image')->getData() ?? [])) + $trick->getImage()->count() > 3) {
         $form->get('image')->addError(new \Symfony\Component\Form\FormError('Merci d\'ajouter 3 photos maximum'));
       } else {
         if ($form->isValid()) {
           $imagesFiles = $form->get('image')->getData();
           if (count($imagesFiles) <= 3) {
             foreach ($imagesFiles as $oneImageFile) {
-                $imageFileName = $fileUploader->upload($oneImageFile);
-                $img = new Image();
-                $img->setName($imageFileName);
-                $trick->addImage($img);
+              $imageFileName = $fileUploader->upload($oneImageFile);
+              $img = new Image();
+              $img->setName($imageFileName);
+              $trick->addImage($img);
             }
 
             $entityManager->persist($trick);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Votre trick '.$trick->getName().' est bien modifié');
-          }}
+            $this->addFlash('success', 'Votre trick "'.$trick->getName().'" est bien modifié');
+          }
+        }
 
-          return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
       }
     }
 

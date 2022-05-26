@@ -25,7 +25,10 @@
       <div class="shadow col-sm-6 col-md-4 col-lg-3 mb-3">
         <div class="card col-md-12 p-0">
           {% for image in trick.image %}
+            {# display only the first image #}
+            {% if loop.index == 1 %}
               <img alt="{{ image.name }}" src="{{ asset('uploads/images/') ~ image.name }}"/>
+            {% endif %}
           {% else %}
               <img class="card-img-top" src="{{ asset('dist/picture/no-image.jpeg') }}" alt="Card image cap">
           {% endfor %}

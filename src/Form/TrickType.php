@@ -40,17 +40,7 @@ class TrickType extends AbstractType
                // 'class'=>User::class,
                // ])
 
-            ->add('video', CollectionType::class,[
-              'entry_type' => VideoType::class,
-              'allow_add' => true,
-              'allow_delete' => true,
-              'by_reference' => false,
-              'mapped' => false,
-              'required' => false,
-              'entry_options' => ['class' => 'video-box'],
-            ])
-
-            ->add('image', FileType::class, [
+            ->add('image', FileType::class,[
               'label' => 'Photo',
               'mapped' => false,
               'multiple' => true,
@@ -77,6 +67,7 @@ class TrickType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Trick::class,
+          "allow_extra_fields" => true
         ]);
     }
 }

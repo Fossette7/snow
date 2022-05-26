@@ -218,7 +218,7 @@ class Trick
   /**
    * @return Collection|video[]
    */
-  public function getVideo(): ?Video
+  public function getVideo(): Collection
   {
     return $this->video;
   }

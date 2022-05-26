@@ -3,7 +3,6 @@
 {% block title %}Trick{% endblock %}
 
 {% block body %}
-
     <div class="container showTricks" style="background-color: #ffffff; opacity: 0.98;border-radius: 9px">
         <section class="text-center">
 
@@ -25,8 +24,11 @@
             </div>
             <!-- https://www.youtube.com/embed/Opg5g4zsiGY -->
             <div class="embed-responsive embed-responsive-16by9">
-                <iframe class="embed-responsive-item" src="{{ asset('uploads/videos/') }}" title="YouTube video player"></iframe>
+                {% for video in trick.video %}
+                <iframe class="embed-responsive-item" src="{{ video.url }}" title="YouTube video player"></iframe>
+                {% endfor %}
             </div>
+
 
             <h3> {{ trick.description|capitalize }}</h3>
 
@@ -51,7 +53,7 @@
                     <div class="container">
                         <div class="row">
                             <p class="col-3"> {{ comment.author }}</p>
-                            <p class="col-2"> {{ comment.createdAt|date('d-m-Y') }}</p>
+                            <p class="col-2"> {{ comment.createdAt|date('d-m-Y H:i') }}</p>
                             <p class="col-4">{{ comment.content }}</p>
                             <span class="col-3">
                                 {% if app.user.email is defined and comment.author.email == app.user.email %}

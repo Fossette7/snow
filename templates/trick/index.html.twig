@@ -9,31 +9,42 @@
             <h2 class="col">Les meilleures figures</h2>
         </div>
         <div class="row">
-            <div class="p-2"><a type="button" class="btn btn-dark" href="{{ path('trick_new') }}">Ajouter nouveau trick</a></div>
+            <div class="p-2"><a type="button" class="btn btn-dark" href="{{ path('trick_new') }}">Ajouter nouveau
+                    trick</a></div>
             {% for trick in tricks %}
                 <!-- mettre la boucle for pour afficher les articles en BDD-->
                 <div class="shadow col-sm-6 col-md-4 col-lg-3 mb-3">
                     <div class="card col-md-12 p-0">
                         <!--<img class="card-img-top" src="https://picsum.photos/400/301" alt="Card image cap">-->
                         {% for image in trick.image %}
-                            <img alt="{{ image.name }}" src="{{ asset('uploads/images/') ~ image.name }}"/>
+                            {# display only the first image #}
+                            {% if loop.index == 1 %}
+                                <img alt="{{ image.name }}"
+                                     src="{{ asset('uploads/images/') ~ image.name }}"/>
+                            {% endif %}
                         {% else %}
-                            <img class="card-img-top" src="{{ asset('dist/picture/no-image.jpeg') }}" alt="Card image cap">
+                            <img class="card-img-top" src="{{ asset('dist/picture/no-image.jpeg') }}"
+                                 alt="Card image cap">
                         {% endfor %}
                         <div class="card-body">
                             {# A ajouter: visible que si connecté #}
-                              {% if app.user.email is defined and trick.author.email ==  app.user.email %}
+                            {% if app.user.email is defined and trick.author.email ==  app.user.email %}
                                 <div class="icon offset-10 col-2">
-                                    <a href="{{ path('trick_edit', {'id': trick.id}) }}"><i class="btn fas fa-pencil-alt me-2"></i></a>
+                                    <a href="{{ path('trick_edit', {'id': trick.id}) }}"><i
+                                                class="btn fas fa-pencil-alt me-2"></i></a>
 
                                     <form method="post" action="{{ path('trick_delete', {'id': trick.id}) }}"
-                                          onsubmit="return confirm('Etes-vous sûr de vouloir supprimer ce post?');" xmlns="http://www.w3.org/1999/html">
-                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trick.id) }}">
-                                        <button type="submit" class="btn myTrashTrick me-2"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                          onsubmit="return confirm('Etes-vous sûr de vouloir supprimer ce post?');"
+                                          xmlns="http://www.w3.org/1999/html">
+                                        <input type="hidden" name="_token"
+                                               value="{{ csrf_token('delete' ~ trick.id) }}">
+                                        <button type="submit" class="btn myTrashTrick me-2"><i class="fa fa-trash"
+                                                                                               aria-hidden="true"></i>
+                                        </button>
                                     </form>
 
                                 </div>
-                             {% endif %}
+                            {% endif %}
                             <h4 class="card-title">{{ trick.name|capitalize }}</h4>
                             <div class="metadata text-muted small"> Ecrit le {{ trick.createdAt |date('d/m/Y') }}</div>
                             <p class="card-text">{{ trick.description|capitalize }}</p>
@@ -41,29 +52,37 @@
 
                             <!-- renvoyer l'id trick path 'nom de la route', {param ID}) }} pour trick_show -->
                         </div>
-                            <div class=" col-12">
-                               <div class="p-2"><a type="button" class="btn btn-primary" href="{{ path('trick_show',{'id': trick.id}) }}">En savoir plus</a></div>
+                        <div class=" col-12">
+                            <div class="p-2"><a type="button" class="btn btn-primary"
+                                                href="{{ path('trick_show',{'id': trick.id}) }}">En savoir plus</a>
                             </div>
+                        </div>
                     </div>
                 </div>
-                {% else %}
+            {% else %}
                 <p>No record found</p>
             {% endfor %}
             <!-- balise fermeture boucle -->
         </div>
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                        {% if currentPage > 1  %}
-                            <li class="page-item"><a class="page-link" href="{{ path('trick_index',{'currentPage': currentPage - 1, 'nbrByPage': nbrByPage}) }}">Précédent</a></li>
-                        {% endif %}
-                        {% for i in range(1, totalPages) %}
-                            <li class="page-item"><a class="page-link" href="{{ path('trick_index',{'currentPage': i, 'nbrByPage': nbrByPage}) }}">{{ i }}</a></li>
-                        {% endfor %}
-                        {% if currentPage < totalPages  %}
-                        <li class="page-item"><a class="page-link" href="{{ path('trick_index',{'currentPage': currentPage + 1, 'nbrByPage': nbrByPage}) }}">Suivant</a></li>
-                        {% endif %}
-                    </ul>
-                </nav>
-        </div>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                {% if currentPage > 1 %}
+                    <li class="page-item"><a class="page-link"
+                                             href="{{ path('trick_index',{'currentPage': currentPage - 1, 'nbrByPage': nbrByPage}) }}">Précédent</a>
+                    </li>
+                {% endif %}
+                {% for i in range(1, totalPages) %}
+                    <li class="page-item"><a class="page-link"
+                                             href="{{ path('trick_index',{'currentPage': i, 'nbrByPage': nbrByPage}) }}">{{ i }}</a>
+                    </li>
+                {% endfor %}
+                {% if currentPage < totalPages %}
+                    <li class="page-item"><a class="page-link"
+                                             href="{{ path('trick_index',{'currentPage': currentPage + 1, 'nbrByPage': nbrByPage}) }}">Suivant</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
 
 {% endblock %}
