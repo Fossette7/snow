@@ -10,7 +10,7 @@
         {{ form_start(form) }}
 
         {{ include('trick/_form.html.twig', {'button_label': 'Enregistrer'}) }}
-            {{ include('trick/_delete_form.html.twig')}}
+        {{ include('trick/_delete_form.html.twig') }}
 
         <a href="{{ path('trick_index') }}" class="btn btn-outline-secondary m-2">Retour à la liste</a>
         {{ form_end(form) }}
@@ -21,16 +21,35 @@
             <div class="col-12">
                 {% for currentImage in trick.image %}
                     <div class="col-md-4">
-                        <a href="{{ path('image_delete', {'id': currentImage.id}) }}" style="color: red; position: relative; top:-30px; right: -140px; font-size: 25px;"><i class="fa fa-times" aria-hidden="true"></i></a>
+                        <a href="{{ path('image_delete', {'id': currentImage.id}) }}"
+                           style="color: red; position: relative; top:-30px; right: -140px; font-size: 25px;"><i
+                                    class="fa fa-times" aria-hidden="true"></i></a>
                         <img class="col-md-4 img-thumbnail"" alt="{{ currentImage.name }}"
-                             src="{{ asset('uploads/images/') ~ currentImage.name }}"/>
+                        src="{{ asset('uploads/images/') ~ currentImage.name }}"/>
                     </div
                 {% endfor %}
             </div>
-                {% else%}
-                    <div class="col-6 m-2">
-                        <h3 class="">Rappel: Ajoute une photo! </h3>
+        {% else %}
+            <div class="col-6 m-2">
+                <h3 class="">Rappel: Ajoute une photo! </h3>
+            </div>
+        {% endif %}
+
+        {% if trick.video | length >= 1 %}
+            <h2>galerie vidéo</h2>
+            <div class="col-12">
+                {% for currentVideo in trick.video %}
+                    <div class="col-md-4 float-start">
+                        <a href="{{ path('video_delete', {'id': currentVideo.id}) }}"
+                           style="color: red; position: relative; top:30px; right: -280px; font-size: 25px;"><i
+                                    class="fa fa-times" aria-hidden="true"></i></a>
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe class="embed-responsive-item" src="{{ currentVideo.url }}"
+                                    title="YouTube video player"></iframe>
+                        </div>
                     </div>
+                {% endfor %}
+            </div><div class="clearfix"></div>
         {% endif %}
     </div>
 {% endblock %}

@@ -51,25 +51,26 @@ class TrickController extends AbstractController
               $img->setName($imageFileName);
               $trick->addImage($img);
             }
+          }
 
-            $formDate = $request->request->get('trick');
-            if (!empty($formDate['video'])) {
-              $videosUrl = $formDate['video'];
-              foreach ($videosUrl as $oneVideo) {
-                if (!empty($oneVideo)) {
-                  $vid = new Video();
-                  $vid->setUrl($oneVideo);
-                  $trick->addVideo($vid);
-                }
+          $formDate = $request->request->get('trick');
+          if (!empty($formDate['video'])) {
+            $videosUrl = $formDate['video'];
+            foreach ($videosUrl as $oneVideo) {
+              if (!empty($oneVideo)) {
+                $vid = new Video();
+                $vid->setUrl($oneVideo);
+                $trick->addVideo($vid);
               }
             }
-
-            $entityManager = $doctrine->getManager();
-            $entityManager->persist($trick);
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Votre trick est bien ajouté');
           }
+
+          $entityManager = $doctrine->getManager();
+          $entityManager->persist($trick);
+          $entityManager->flush();
+
+          $this->addFlash('success', 'Votre trick est bien ajouté');
+
           return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
         }
       }
@@ -156,6 +157,18 @@ class TrickController extends AbstractController
               $img = new Image();
               $img->setName($imageFileName);
               $trick->addImage($img);
+            }
+
+            $formDate = $request->request->get('trick');
+            if (!empty($formDate['video'])) {
+              $videosUrl = $formDate['video'];
+              foreach ($videosUrl as $oneVideo) {
+                if (!empty($oneVideo)) {
+                  $vid = new Video();
+                  $vid->setUrl($oneVideo);
+                  $trick->addVideo($vid);
+                }
+              }
             }
 
             $entityManager->persist($trick);

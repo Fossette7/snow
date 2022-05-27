@@ -16,16 +16,13 @@
                 <div class="shadow col-sm-6 col-md-4 col-lg-3 mb-3">
                     <div class="card col-md-12 p-0">
                         <!--<img class="card-img-top" src="https://picsum.photos/400/301" alt="Card image cap">-->
-                        {% for image in trick.image %}
-                            {# display only the first image #}
-                            {% if loop.index == 1 %}
-                                <img alt="{{ image.name }}"
-                                     src="{{ asset('uploads/images/') ~ image.name }}"/>
-                            {% endif %}
-                        {% else %}
+                        {% if trick.image is empty %}
                             <img class="card-img-top" src="{{ asset('dist/picture/no-image.jpeg') }}"
                                  alt="Card image cap">
-                        {% endfor %}
+                        {% else %}
+                            {# display first image #}
+                            <img alt="{{ trick.image[0].name }}" src="{{ asset('uploads/images/') ~ trick.image[0].name }}"/>
+                        {% endif %}
                         <div class="card-body">
                             {# A ajouter: visible que si connecté #}
                             {% if app.user.email is defined and trick.author.email ==  app.user.email %}
