@@ -3,16 +3,16 @@
 {% block title %}Fun Tricks!{% endblock %}
 
 {% block body %}
-  <div class="container-fluid ct-header">
-    <div class="img-header">
-      <img src="{{ asset('dist/picture/header-snow.1.jpg') }}" class="img-fluid" alt="Responsive image">
+  <div class="container-fluid ct-header" >
+    <div class="img-header mx-auto offset-md-3 col-12 text-center pt-5 pb-5">
+      <h1 class="col">SNOWTRICKS</h1>
     </div>
   </div>
   <div class="jumbotron jumbotron-fluid mb-5">
 
       <div class="container d-flex col-12">
         <div class="mx-auto offset-md-3 col-8 text-center pt-5 pb-5">
-          <h1 class="col">Espace communautaire pour apprendre, partager, discuter sur la discipline du snowboard</h1>
+          <h2 class="col">Espace communautaire pour apprendre, partager, discuter sur la discipline du snowboard</h2>
         </div>
       </div>
   </div>
@@ -25,7 +25,10 @@
       <div class="shadow col-sm-6 col-md-4 col-lg-3 mb-3">
         <div class="card col-md-12 p-0">
           {% for image in trick.image %}
+            {# display only the first image #}
+            {% if loop.index == 1 %}
               <img alt="{{ image.name }}" src="{{ asset('uploads/images/') ~ image.name }}"/>
+            {% endif %}
           {% else %}
               <img class="card-img-top" src="{{ asset('dist/picture/no-image.jpeg') }}" alt="Card image cap">
           {% endfor %}

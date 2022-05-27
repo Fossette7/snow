@@ -1,0 +1,6 @@
+<form method="post" action="{{ path('image_delete', {'id': image.id}) }}"
+      onsubmit="return confirm('Etes-vous sûr de vouloir supprimer cette image?');" xmlns="http://www.w3.org/1999/html">
+
+    <button type="submit" class="btn m-2"><i class="fa fa-trash"></i></button>
+</form>
+

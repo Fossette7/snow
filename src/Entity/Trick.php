@@ -58,16 +58,23 @@ class Trick
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="trick", orphanRemoval=true, cascade={"persist"})
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="trick", orphanRemoval=true, cascade={"persist", "remove"})
      * @ORM\OrderBy({"createdAt" = "DESC"})
      */
     private $comments;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Video::class, mappedBy="trick", orphanRemoval=true, cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $video;
+
 
     public function __construct()
     {
-        $this->createdAt = new \DateTimeImmutable('now');
+        $this->createdAt = new \DateTime('now');
         $this->image = new ArrayCollection();
+        $this->video = new ArrayCollection();
         $this->comments = new ArrayCollection();
     }
 
@@ -208,6 +215,42 @@ class Trick
     }
 
 
+  /**
+   * @return Collection|video[]
+   */
+  public function getVideo(): Collection
+  {
+    return $this->video;
+  }
 
+  public function setVideo($video):self
+  {
+    $this->video = $video;
+
+    return $this;
+  }
+
+  public function addVideo(Video $oneVideo): self
+  {
+    if (!$this->video->contains($oneVideo)) {
+      $this->video[] = $oneVideo;
+      $oneVideo->setTrick($this);
+    }
+
+    return $this;
+  }
+
+  public function removeVideo(Video $oneVideo): self
+  {
+    if ($this->video->contains($oneVideo)) {
+      $this->video->removeElement($oneVideo);
+      // set the owning side to null (unless already changed)
+      if ($oneVideo->getTrick() === $this) {
+        $oneVideo->setTrick(null);
+      }
+    }
+
+    return $this;
+  }
 
 }

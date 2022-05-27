@@ -1,7 +1,22 @@
 body {
     background-color: #efefef;
+    background-image:url("/dist/picture/header-snow.1.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    opacity: 0.98;
 }
-
+.h1{
+    background-color: #ffffff;
+    opacity: 0.9;
+    text-transform: uppercase;
+}
+.img-header{
+    background-color: #ffffff;
+    opacity: 0.8;
+    border-radius: 9px;
+}
 .btn-light-blue {
     background-color: #5584AC;
     border: 1px #5584AC;
@@ -33,9 +48,26 @@ body {
 .jumbotron {
     background-color: #ffffff;
 }
+.img{
+    vertical-align: middle;
+    border-style: none;
+    width: 100%;
+    height: 200px;
+    object-fit:cover;
+}
 
 .blue-background {
     background-color: #22577E;
+}
+.showTricks{
+    background-color: #ffffff;
+    opacity: 0.98;
+    border-radius: 9px;
+}
+.edit-template{
+    background-color: #ffffff;
+    opacity: 0.89;
+    border-radius: 9px;
 }
 
 footer {

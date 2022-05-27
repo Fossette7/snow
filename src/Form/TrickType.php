@@ -4,13 +4,16 @@ namespace App\Form;
 
 use App\Entity\Category;
 use App\Entity\Trick;
-
+use App\Entity\Video;
 //use App\Entity\User;
+
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\VideoType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
@@ -36,11 +39,12 @@ class TrickType extends AbstractType
                // 'label'=>'Auteur',
                // 'class'=>User::class,
                // ])
-            ->add('image', FileType::class, [
-              'label' => false,
+
+            ->add('image', FileType::class,[
+              'label' => 'Photo',
               'mapped' => false,
               'multiple' => true,
-              'required' => true,
+              'required' => false,
               'constraints' => [
                 new All([
                   new File([
@@ -50,7 +54,7 @@ class TrickType extends AbstractType
                       'image/jpg',
                       'image/png'
                   ],
-                  'mimeTypesMessage' => 'Télécharger une image valide (jpeg,jpg,png)',
+                  'mimeTypesMessage' => 'Télécharger une image avec une extension valide (jpeg,jpg,png)',
                   ])
                 ])
               ],
@@ -63,6 +67,7 @@ class TrickType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Trick::class,
+          "allow_extra_fields" => true
         ]);
     }
 }
