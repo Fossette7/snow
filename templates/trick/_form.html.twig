@@ -4,7 +4,7 @@
     {{ form_row(form.category) }}
     {{ form_row(form.image) }}
     <div class="mb-3">
-        <label for="trick_video" class="form-label">Video</label><br/>
+        <label for="trick_video" class="form-label">Video (embed link)</label><br/>
         <div id="video-block"></div>
         <i id="add-new-video" class="fas fa-plus-circle"></i>
     </div>
@@ -15,13 +15,15 @@
 
     <div style="display: none" id="video-add">
         <div class="mb-3">
-            <input type="text" name="trick[video][]" class="form-control">
+            <input type="url" name="trick[video][]" class="form-control"  placeholder="https://example.com" pattern="https://.*">
+
         </div>
     </div>
     {{ form_rest(form) }}
 </div>
 
 <script type="text/javascript">
+  <!-- Jquery - when page is ready after a click catch #video-add and his children to copy them after #video-block-->
   $('document').ready(function () {
     $('#add-new-video').click(function () {
       $("#video-add").children().clone().appendTo("#video-block");

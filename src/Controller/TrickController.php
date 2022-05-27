@@ -82,11 +82,6 @@ class TrickController extends AbstractController
     ]);
   }
 
-  public function getTargetDirectory()
-  {
-    return $this->targetDirectory;
-  }
-
   #[Route('/{id}/detail', name: 'trick_show', methods: ['GET', 'POST'])]
   public function show(Request $request, ManagerRegistry $doctrine, Trick $trick = null): Response
   {
