@@ -54,7 +54,7 @@ class TrickType extends AbstractType
                       'image/jpg',
                       'image/png'
                   ],
-                  'mimeTypesMessage' => 'Télécharger une image avec une extension valide (jpeg,jpg,png)',
+                      'mimeTypesMessage' => 'Télécharger une image avec une extension valide (jpeg,jpg,png)',
                   ])
                 ])
               ],

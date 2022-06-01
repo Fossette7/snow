@@ -3,14 +3,11 @@
 {% block title %}User{% endblock %}
 
 {% block body %}
-    <h1>User</h1>
+    <h1>Profil Utilisateur</h1>
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
+
             <tr>
                 <th>Username</th>
                 <td>{{ user.username }}</td>
@@ -20,16 +17,8 @@
                 <td>{{ user.email }}</td>
             </tr>
             <tr>
-                <th>Active</th>
-                <td>{{ user.active ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
                 <th>CreatedAt</th>
                 <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Roles</th>
-                <td>{{ user.roles }}</td>
             </tr>
             <tr>
                 <th>Avatar</th>

@@ -44,5 +44,9 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
          - { path: ^/login, roles: PUBLIC_ACCESS }
+         - { path: ^/inscription, roles: PUBLIC_ACCESS }
         # - { path: ^/admin, roles: ROLE_ADMIN }
-         - { path: ^/user, roles: PUBLIC_ACCESS }
+         - { path: ^/user, roles: ROLE_USER }
+         - { path: ^/comment, roles: ROLE_USER }
+         - { path: ^/image, roles: ROLE_USER }
+         - { path: ^/video, roles: ROLE_USER }

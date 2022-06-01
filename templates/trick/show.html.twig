@@ -52,7 +52,18 @@
                 {% for comment in trick.comments %}
                     <div class="container">
                         <div class="row">
-                            <p class="col-3"> {{ comment.author }}</p>
+                            <span class="col-1">
+                                {% if comment.author.avatar is empty %}
+                                    <img class=" rounded-circle avatar-img" src="{{ asset('dist/picture/avatardefault9.png') }}"
+                                 alt="Default Avatar picture">
+                            </span>
+                            {% else %}
+                                <p class="col-1">
+                                    <img class=" img-fluid avatar-img" src="{{ asset('uploads/images/') ~ comment.author.avatar }}" alt="avatar picture"/>
+                                </p>
+                            {% endif %}
+
+                            <p class="col-2"> {{ comment.author }}</p>
                             <p class="col-2"> {{ comment.createdAt|date('d-m-Y H:i') }}</p>
                             <p class="col-4">{{ comment.content }}</p>
                             <span class="col-3">
@@ -71,7 +82,6 @@
                 {% endfor %}
 
                 {% if app.user.email is defined %}
-                <h4>Ajouter un commentaire</h4>
 
                 {{ form_start(formComment) }}
 

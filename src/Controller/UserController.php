@@ -16,54 +16,6 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 #[Route('/user')]
 class UserController extends AbstractController
 {
-    #[Route('/', name: 'user_index', methods: ['GET'])]
-    public function index(UserRepository $userRepository): Response
-    {
-        return $this->render('user/index.html.twig', [
-            'users' => $userRepository->findAll(),
-        ]);
-    }
-
-    #[Route('/new', name: 'user_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
-    {
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            $avatarFile = $form->get('avatar')->getData();
-
-            if($avatarFile){
-              $originalFilename = pathinfo($avatarFile->getClientOriginalName(), PATHINFO_FILENAME);
-              $safeFilename = $slugger->slug($originalFilename);
-              $newFilename = $safeFilename.'-'.uniqid().'.'.$avatarFile->guessExtension();
-
-              try{
-                  $avatarFile->move(
-                    $this->getParameter('avatars_directory'),
-                    $newFilename
-                  );
-              } catch (FileException $e){
-                return null;
-              }
-
-              $user->setAvatar($newFilename);
-            }
-
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('user/new.html.twig', [
-            'user' => $user,
-            'form' => $form,
-        ]);
-    }
-
     #[Route('/{id}', name: 'user_show', methods: ['GET'])]
     public function show(User $user): Response
     {
