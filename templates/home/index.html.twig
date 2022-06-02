@@ -34,7 +34,7 @@
           {% endfor %}
           <div class="card-body">
             {# A ajouter: visible que si connecté #}
-            {% if app.user.email is defined and trick.author.email == app.user.email %}
+            {% if app.user.email is defined and trick.author.email == app.user.email or is_granted('ROLE_ADMIN') %}
               <div class="icon offset-10 col-2">
                 <a href="{{ path('trick_edit', {'id': trick.id}) }}"><i class="fas fa-pencil-alt"></i></a>
                 <a href="{{ path('trick_delete', {'id': trick.id}) }}"><i class="fa fa-trash" aria-hidden="true"></i></a>

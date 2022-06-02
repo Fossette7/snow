@@ -24,8 +24,8 @@
                             <img alt="{{ trick.image[0].name }}" src="{{ asset('uploads/images/') ~ trick.image[0].name }}"/>
                         {% endif %}
                         <div class="card-body">
-                            {# A ajouter: visible que si connecté #}
-                            {% if app.user.email is defined and trick.author.email ==  app.user.email %}
+                            {# If log in display Buttons trick-edit & trick-delete#}
+                            {% if app.user.email is defined and trick.author.email ==  app.user.email or is_granted('ROLE_ADMIN') %}
                                 <div class="icon offset-10 col-2">
                                     <a href="{{ path('trick_edit', {'id': trick.id}) }}"><i
                                                 class="btn fas fa-pencil-alt me-2"></i></a>

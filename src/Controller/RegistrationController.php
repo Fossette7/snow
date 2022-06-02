@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\AuthenAuthenticator;
+use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +19,7 @@ class RegistrationController extends AbstractController
 {
     #[Route('/inscription', name: 'register')]
     public function index( Request $request, UserPasswordHasherInterface $userPasswordHasher,UserAuthenticatorInterface $userAuthenticator,
-      AuthenAuthenticator $authenticator,  EntityManagerInterface $entityManager) : Response
+      AuthenAuthenticator $authenticator,  EntityManagerInterface $entityManager, FileUploader $fileUploader) : Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -33,6 +34,11 @@ class RegistrationController extends AbstractController
               $form->get('plainPassword')->getData()
               )
             );
+            $avatarFile = $form->get('avatar')->getData();
+            if ($avatarFile){
+              $avatarFileName = $fileUploader->upload($avatarFile, ['avatar' => true]);
+              $user->setAvatar($avatarFileName);
+            }
             $user->setRoles(['ROLE_USER']);
             $entityManager->persist($user);
             $entityManager->flush();

@@ -32,12 +32,13 @@ class UserType extends AbstractType
               'constraints'=> [
                 new File([
                   'maxSize' => '1024k',
-                  'mimeType' => [
+                  'mimeTypes' => [
                     'image/jpeg',
                     'image/gif',
-                    'image/jpg'
+                    'image/jpg',
+                    'image/png'
                   ],
-                  'mimeTypesMessage' => 'Ajouter une image valide',
+                  'mimeTypesMessage' => 'Ajouter une image valide (jpeg,jpg,gif,png)',
                 ])
               ]
             ])
