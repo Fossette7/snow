@@ -52,16 +52,24 @@
                     <span class="badge badge-pill badge-info me-3">Bonjour {{ app.user.username }}</span>
                 {% endif %}
 
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('admin_user_list') }}" class="btn btn-light-blue me-3" type="button"><i class="fas fa fa-user">
+                        </i>Admin</a>
+                {% endif %}
+
+                {% if is_granted('ROLE_USER') %}
+                    <a href="{{ path('user_show',{'id': app.user.id}) }}" class="btn btn-light-blue me-3" type="button"><i class="fas fa fa-user">
+                        </i>Profil</a>
+                {% endif %}
 
                 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                <a class="link" href="{{ path('app_logout') }}">Logout</a>
+                    <a class="link me-3" href="{{ path('app_logout') }}">Logout</a>
                 {% else %}
                     <a href="{{ path('register') }}" class="btn btn-light-blue me-3" type="button"><i class="fas fa fa-user">
                         </i>Inscription</a>
                     <a href="{{ path('app_login') }}" class="btn btn-light-blue me-3" type="button"><i class="fas fa fa-user">
                         </i> Connexion</a>
-              {% endif %}
-
+                {% endif %}
         </div>
       </div>
     </div>

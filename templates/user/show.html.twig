@@ -3,8 +3,8 @@
 {% block title %}User{% endblock %}
 
 {% block body %}
+<div class="container" style="background-color: white">
     <h1>Profil Utilisateur</h1>
-
     <table class="table">
         <tbody>
 
@@ -22,7 +22,9 @@
             </tr>
             <tr>
                 <th>Avatar</th>
-                <td>{{ user.avatar }}</td>
+                <td><p class="col-5">
+                        <img class=" img-fluid avatar-img" src="{{ asset('uploads/avatars/') ~ user.avatar }}" alt="avatar picture"/>
+                    </p></td>
             </tr>
             <tr>
                 <th>Password</th>
@@ -33,10 +35,9 @@
 
 
     <div class="p-2">
-        <a href="{{ path('user_index') }}" class="btn btn-outline-dark">Retour à la liste</a>
+        <a href="{{ path('user_edit', {'id': user.id}) }}" class="btn btn-outline-dark">Modifier</a>
     </div>
 
-    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
-
     {{ include('user/_delete_form.html.twig') }}
+</div>
 {% endblock %}

@@ -33,7 +33,7 @@ class TrickController extends AbstractController
     TokenStorageInterface $tokenStorage
   ): Response {
     $trick = new Trick();
-    //accès à new uniquement pour les user connectés / mettre message /et bloquer accès
+    //accès à new uniquement pour les user connectés / rediriger vers page de connexion
     $trick->setAuthor($tokenStorage->getToken()->getUser());
     $form = $this->createForm(TrickType::class, $trick);
     $form->handleRequest($request);

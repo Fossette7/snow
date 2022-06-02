@@ -35,7 +35,9 @@
             <p>écrit par: {{ trick.author.username|capitalize }}</p>
 
         </section>
-         {% if app.user.email is defined and trick.author.email ==  app.user.email %}
+         {% if app.user.email is defined
+             and trick.author.email ==  app.user.email
+             or is_granted('ROLE_ADMIN') %}
         <div class="show-button">
             <div class="p-2"><a href="{{ path('trick_edit', {'id': trick.id}) }}" class="btn btn-warning">Modifier</a>
             </div>
@@ -52,7 +54,7 @@
                 {% for comment in trick.comments %}
                     <div class="container">
                         <div class="row">
-                            <span class="col-1">
+                            <span class="col-5">
                                 {% if comment.author.avatar is empty %}
                                     <img class=" rounded-circle avatar-img" src="{{ asset('dist/picture/avatardefault9.png') }}"
                                  alt="Default Avatar picture">
@@ -67,7 +69,7 @@
                             <p class="col-2"> {{ comment.createdAt|date('d-m-Y H:i') }}</p>
                             <p class="col-4">{{ comment.content }}</p>
                             <span class="col-3">
-                                {% if app.user.email is defined and comment.author.email == app.user.email %}
+                                {% if app.user.email is defined and comment.author.email == app.user.email or is_granted('ROLE_ADMIN') %}
                             <div class="icon offset-10 col-2 md-3">
                                 <a href="{{ path('comment_edit', {'id': comment.id}) }}"><i class="fas fa-pencil-alt"></i></a>
                                 <a href="{{ path('comment_delete', {'id': comment.id}) }}"
@@ -94,8 +96,9 @@
 
                 {{ form_end(formComment) }}
                 {% else %}
-                <a href="{{ path('app_login') }}" class="btn btn-light-blue me-3" type="button"><i class="fas fa fa-user">
-                    </i> Entrez un commentaire</a>
+                    <a href="{{ path('app_login') }}" class="btn btn-light-blue me-3" type="button">
+                        <i class="fas fa fa-user"></i> Entrez un commentaire
+                    </a>
 
                 {% endif %}
             </div>
