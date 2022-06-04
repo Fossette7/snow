@@ -44,7 +44,8 @@
 
             {{ include('trick/_delete_form.html.twig',{'button_label':'supprimer'}) }}
             {% endif %}
-            <div class="p-2"><a href="{{ path('trick_index') }}" class="btn btn-outline-dark">Retour à la liste</a>
+            <div class="p-2">
+                <a href="{{ path('trick_index') }}" class="btn btn-outline-dark">Retour à la liste</a>
             </div>
         </div>
 
@@ -61,7 +62,7 @@
                             </span>
                             {% else %}
                                 <p class="col-1">
-                                    <img class=" img-fluid avatar-img" src="{{ asset('uploads/images/') ~ comment.author.avatar }}" alt="avatar picture"/>
+                                    <img class=" img-fluid avatar-img" src="{{ asset('uploads/avatars/') ~ comment.author.avatar }}" alt="avatar picture"/>
                                 </p>
                             {% endif %}
 

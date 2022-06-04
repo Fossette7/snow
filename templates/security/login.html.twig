@@ -3,7 +3,7 @@
 {% block title %}Connexion!{% endblock %}
 
 {% block body %}
-<div class="container">
+<div class="container showTricks">
 <form action="{{ path('app_login') }}" method="post">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -35,10 +35,20 @@
             </label>
         </div>
     #}
-
-    <button class="btn btn-lg btn-primary my-3" type="submit">
-        Connexion
-    </button>
+<div class="container"
+     <div class="row btn-connexion">
+         <div class="col-sm offset-5">
+            <button class="col-3 btn btn-primary my-3" type="submit">
+                Connexion
+            </button>
+         </div>
+         <div class="col-sm offset-5">
+            <a class="mb-4 btn-forget-pass" type="button">
+                Mot de passe oublié
+            </a>
+         </div>
+     </div>
+</form>
 </form>
 </div>
 {% endblock %}

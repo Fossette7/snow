@@ -69,21 +69,37 @@ body {
     opacity: 0.89;
     border-radius: 9px;
 }
+.row.btn-connexion {
+    background-color: yellow;
+}
+.btn-forget-pass{
+    margin-left: 16px;
+}
 
+/** index trick home trick **/
+a:hover{
+    color:#000000;
+    cursor: pointer;
+}
+
+a.card-title{
+    text-decoration: none;
+}
+/** show trick **/
+
+a.trick-title{
+    text-decoration: none;
+}
 footer {
     background-color: #22577E;
     min-height: 75px;
+}
+@media screen and (min-width: 480px){
+
 }
 
 .fa.fa-github, .fa.fa-instagram, .fa.fa-facebook, :hover {
     color: #000000;
 }
 
-a:hover{
-    color:#000000;
-    cursor: pointer;
-}
 
-a.trick-title{
-    text-decoration: none;
-}
