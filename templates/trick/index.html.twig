@@ -9,8 +9,9 @@
             <h2 class="col">Les meilleures figures</h2>
         </div>
         <div class="row">
-            <div class="p-2"><a type="button" class="btn btn-dark" href="{{ path('trick_new') }}">Ajouter nouveau
-                    trick</a></div>
+            <div class="p-2">
+                <a type="button" class="add-trick btn btn-dark" href="{{ path('trick_new') }}">Ajouter nouveau trick</a>
+            </div>
             {% for trick in tricks %}
                 <!-- mettre la boucle for pour afficher les articles en BDD-->
                 <div class="shadow col-sm-6 col-md-4 col-lg-3 mb-3">
@@ -42,7 +43,9 @@
 
                                 </div>
                             {% endif %}
-                            <h4 class="card-title"><a href="{{ path('trick_show',{'id': trick.id}) }}">{{ trick.name|capitalize }}</a></h4>
+                            <h4 class="card-title">
+                                <a href="{{ path('trick_show',{'id': trick.id}) }}" class="trickname-card">{{ trick.name|capitalize }}</a>
+                            </h4>
                             <div class="metadata text-muted small"> Ecrit le {{ trick.createdAt |date('d/m/Y') }}</div>
                             <p class="card-text">{{ trick.description|capitalize }}</p>
                             <h6>{{ trick.author.username }}</h6>

@@ -4,14 +4,14 @@
 
 {% block body %}
   <div class="container-fluid ct-header" >
-    <div class="img-header mx-auto offset-md-3 col-12 text-center pt-5 pb-5">
+    <div class="img-header mx-auto offset-md-3 col-12 text-center">
       <h1 class="col">SNOWTRICKS</h1>
     </div>
   </div>
   <div class="jumbotron jumbotron-fluid mb-5">
 
-      <div class="container d-flex col-12">
-        <div class="mx-auto offset-md-3 col-8 text-center pt-5 pb-5">
+      <div class="container introduction d-flex col-12">
+        <div class="mx-auto offset-md-3 col-8 text-center pt-4 pb-4">
           <h2 class="col">Espace communautaire pour apprendre, partager, discuter sur la discipline du snowboard</h2>
         </div>
       </div>
@@ -40,21 +40,27 @@
                 <a href="{{ path('trick_delete', {'id': trick.id}) }}"><i class="fa fa-trash" aria-hidden="true"></i></a>
               </div>
             {% endif %}
-            <h4 class="card-title"><a href="{{ path('trick_show',{'id': trick.id}) }}">{{ trick.name|capitalize }}</a></h4>
+            <h4 class="card-title">
+              <a href="{{ path('trick_show',{'id': trick.id}) }}" class="trickname-card">{{ trick.name|capitalize }}</a>
+            </h4>
             <div class="metadata text-muted small"> Ecrit le {{ trick.createdAt|date('d/m/Y') }}</div>
-            <p class="card-text">{{ trick.description|capitalize }}</p>
+            <p class="card-text">{{ trick.description|truncate(10) }}</p>
               <h6>{{ trick.author.username }}</h6>
 
             <!-- renvoyer l'id trick path 'nom de la route', {param ID}) }} -->
             <div class="col-12">
-              <div class="mt-2"><a type="button" class="btn btn-primary" href="{{ path('trick_show',{'id': trick.id}) }}">En savoir plus</a></div>
+              <div class="mt-2">
+                <a type="button" class="btn btn-primary" href="{{ path('trick_show',{'id': trick.id}) }}">En savoir plus</a>
+              </div>
             </div>
           </div>
         </div>
       </div>
         {% endfor %}
       <!-- balise fermeture boucle -->
-      <div class="col offset-10 col-sm-2 mt-4"><a type="button" class="btn btn-light" href="{{ path('trick_index') }}">Plus de tricks --></a></div>
+      <div class="col offset-10 col-sm-2 mt-4">
+        <a type="button" class="btn btn-light" href="{{ path('trick_index') }}">Plus de tricks --></a>
+      </div>
     </div>
 
   </div>
