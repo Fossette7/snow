@@ -33,7 +33,7 @@
 </head>
 <body>
 
-    <header>
+<header>
 
   <nav class="navbar navbar-expand-lg navbar-dark blue-background">
     <div class="container">
@@ -53,7 +53,7 @@
                 {% endif %}
 
                 {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ path('admin_user_list') }}" class="btn btn-light-blue me-3" type="button"><i class="fas fa fa-user">
+                    <a href="" class="btn btn-light-blue me-3" type="button"><i class="fas fa fa-user">
                         </i>Admin</a>
                 {% endif %}
 
@@ -76,24 +76,28 @@
   </nav>
 </header>
 
-{% block body %}{% endblock %}
+<div class="container call-body">
+    {% block body %}{% endblock %}
+</div>
 
 
-<footer class="mt-5">
-  <div class="container">
-      <div class="d-flex offset-lg-10 col-lg-2 offset-md-10 col-md-2 offset-sm-8 col-sm-4 offset-xs-8 col-xs-4 mt-3 pt-3">
-        <div class="row mx-1"><a href="#"><i class="fab fa-github fa-lg fa-2x" aria-hidden="true"></i></a></div>
-        <div class="row mx-1"><a href="#"><i class="fab  fa-facebook fa-lg fa-2x"></i></a></div>
-        <div class="row mx-1"><a href="#"><i class="fab fa-instagram fa-lg fa-2x" aria-hidden="true"></i></a></div>
-      </div>
+    {% block footer %}
+        <footer class="back-footer">
+              <div class="container">
+                  <div class="d-flex offset-lg-10 col-lg-2 offset-md-10 col-md-2 offset-sm-8 col-sm-4 offset-xs-8 col-xs-4 mt-3 pt-3">
+                    <div class="row mx-1"><a href="#"><i class="fab fa-github fa-lg fa-2x" aria-hidden="true"></i></a></div>
+                    <div class="row mx-1"><a href="#"><i class="fab  fa-facebook fa-lg fa-2x"></i></a></div>
+                    <div class="row mx-1"><a href="#"><i class="fab fa-instagram fa-lg fa-2x" aria-hidden="true"></i></a></div>
+                  </div>
 
+                <div class="footer-copyright text-center py-3">
+                  <p class="rights mb-0 small">&copy; {{ 'now'|date('Y') }} Snowtricks project. All right reserved.
+                    <a href="#"> Reybeka.com</a> </p>
+                </div>
+              </div>
+        </footer>
+    {% endblock %}
 
-    <div class="footer-copyright text-center py-3">
-      <p class="mb-0 small">&copy; {{ 'now'|date('Y') }} Snowtricks project. All right reserved.
-        <a href="#"> Reybeka.com</a> </p>
-    </div>
-  </div>
-</footer>
 
 </body>
 </html>

@@ -4,7 +4,7 @@
 
 {% block monTitre %}<h1>Inscription</h1>{% endblock %}
 {% block body %}
-    <div class="container">
+    <div class="container showTricks">
         <h2 class="img-header mb-3 font-weight-normal">Inscription</h2>
         {{ form_start(registrationForm) }}
 
@@ -19,4 +19,9 @@
             <button type="submit" class="btn btn-primary">Enregistrement</button>
         {{ form_end(registrationForm) }}
     </div>
+
+    {% block footer %}
+        {# override the base footer for a display:none #}
+    {% endblock %}
+
 {% endblock %}

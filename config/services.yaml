@@ -29,4 +29,3 @@ services:
         arguments:
             $targetDirectory: '%images_directory%'
             $avatarDirectory: '%avatars_directory%'
-

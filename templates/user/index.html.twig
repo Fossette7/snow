@@ -4,7 +4,7 @@
 
 {% block body %}
     <h1>User index</h1>
-    <div class="col" style="background-color: white">
+    <div class="container showTricks">
         <table class="table">
             <thead>
                 <tr>
@@ -43,6 +43,6 @@
             </tbody>
         </table>
 
-        <a href="{{ path('register') }}">Create new</a>
+        <a href="{{ path('register') }}" type="button" class="btn btn-primary">Créer nouveau compte</a>
     </div>
 {% endblock %}

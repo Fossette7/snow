@@ -4,7 +4,7 @@
     {{ form_row(form.username) }}
     {{ form_row(form.email) }}
     {{ form_row(form.avatar) }}
-    {{ form_row(form.password) }}
+    {{ form_row(form.password , {'label': 'Mot de passe'}) }}
     {{ form_rest(form) }}
 
     <button class="btn btn-success mb-3">{{ button_label|default('Enregistrer') }}</button>
