@@ -7,16 +7,28 @@ body {
     background-size: cover;
     opacity: 0.98;
 }
+
+.call-body{
+    padding: 30px;
+}
+
 .h1{
     background-color: #ffffff;
+    font-size: 2.5rem;
+    padding-bottom: 2rem;
     opacity: 0.9;
     text-transform: uppercase;
+}
+
+.introduction{
+    border-radius: 9px;
 }
 .img-header{
     background-color: #ffffff;
     opacity: 0.8;
     border-radius: 9px;
 }
+
 .btn-light-blue {
     background-color: #5584AC;
     border: 1px #5584AC;
@@ -28,12 +40,14 @@ body {
     padding-left: 0;
     padding-right: 0;
 }
+
 .img-fluid{
     max-width: 100%;
     height: auto;
     padding-left: 0;
     padding-right: 0;
 }
+
 .btn-card {
     background-color: #023052;
     color: #ffffff;
@@ -47,7 +61,9 @@ body {
 
 .jumbotron {
     background-color: #ffffff;
+    border-radius: 9px;
 }
+
 .img{
     vertical-align: middle;
     border-style: none;
@@ -59,41 +75,55 @@ body {
 .blue-background {
     background-color: #22577E;
 }
+
 .showTricks{
     background-color: #ffffff;
     opacity: 0.98;
     border-radius: 9px;
+    padding:10px 10px 10px 10px;
+    margin-top:10px 10px;
 }
 .edit-template{
     background-color: #ffffff;
     opacity: 0.89;
     border-radius: 9px;
 }
-.row.btn-connexion {
-    background-color: yellow;
-}
+
 .btn-forget-pass{
-    margin-left: 16px;
+    margin: 30px 15px;
 }
 
 /** index trick home trick **/
-a:hover{
-    color:#000000;
-    cursor: pointer;
+a.add-trick{
+    margin-left: 4px;
 }
-
 a.card-title{
     text-decoration: none;
 }
+a.trickname-card{
+    text-decoration: none;
+}
+
 /** show trick **/
 
 a.trick-title{
     text-decoration: none;
 }
+
 footer {
     background-color: #22577E;
     min-height: 75px;
 }
+.back-footer{
+
+}
+.footer-copyright{
+
+}
+.rights{
+
+}
+
 @media screen and (min-width: 480px){
 
 }

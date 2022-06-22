@@ -112,7 +112,7 @@ class TrickController extends AbstractController
       $entityManager->flush();
 
 
-      $this->addFlash('message', 'Votre commentaire a bien été ajouté');
+      $this->addFlash('notice', 'Votre commentaire a bien été ajouté');
 
       return $this->redirectToRoute('trick_show', ['id' => $trick->getId()]);
     }

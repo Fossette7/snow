@@ -27,6 +27,14 @@ class UserController extends AbstractController
     #[Route('/{id}/edit', name: 'user_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
+        //check if a user is connected
+        if(!$this->getUser()){
+          return $this->redirectToRoute('app_login');
+        }
+      //check if user is a different user
+      if($this->getUser() !== $user){
+        return $this->redirectToRoute('home');
+      }
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
@@ -36,7 +44,9 @@ class UserController extends AbstractController
             $entityManager->persist();
             $entityManager->flush();
 
-            return $this->redirectToRoute('user_index', [], Response::HTTP_SEE_OTHER);
+            $this->addFlash('success', 'Votre profil est bien modifié.');
+
+            return $this->redirectToRoute('trick_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('user/edit.html.twig', [

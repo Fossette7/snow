@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 
 class SendMailService extends AbstractController
 {
@@ -25,7 +26,7 @@ class SendMailService extends AbstractController
       $email = (new TemplatedEmail())
         ->from(new Address('reybeka.dev@gmail.com'))
         ->to(new Address($email))
-        ->subject('Reset your password!')
+        ->subject('Reset ton mot de passe!')
 
         // path of the Twig template to render
         ->htmlTemplate('reset_password/email.html.twig')
@@ -39,13 +40,14 @@ class SendMailService extends AbstractController
     }
   }
 
-  public function sendWelcomeMail(MailerInterface $mailer)
+  public function sendWelcomeMail(MailerInterface $mailer) :void
   {
     if($email){
       $email = (new TemplatedEmail())
         ->from(new Address('reybeka.dev@gmail.com'))
         ->to(new Address($email))
-        ->subject('Thanks for signing up!')
+        ->subject('Inscription Snowtricks!')
+        ->text('Bienvenue dans la communauté Snowtricks!')
 
         // path of the Twig template to render
         ->htmlTemplate('registration/email.html.twig')
@@ -55,7 +57,7 @@ class SendMailService extends AbstractController
           'expiration_date' => new \DateTime('+1 hour'),
         ])
       ;
-      $this->mailer->send($email);
+     $this->mailer->send($email);
     }
   }
 

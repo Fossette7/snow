@@ -44,7 +44,7 @@
               <a href="{{ path('trick_show',{'id': trick.id}) }}" class="trickname-card">{{ trick.name|capitalize }}</a>
             </h4>
             <div class="metadata text-muted small"> Ecrit le {{ trick.createdAt|date('d/m/Y') }}</div>
-            <p class="card-text">{{ trick.description|truncate(10) }}</p>
+            <p class="card-text">{{ trick.description }}</p>
               <h6>{{ trick.author.username }}</h6>
 
             <!-- renvoyer l'id trick path 'nom de la route', {param ID}) }} -->

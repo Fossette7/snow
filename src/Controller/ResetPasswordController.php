@@ -66,7 +66,7 @@ class ResetPasswordController extends AbstractController
     #[Route('/check-email', name: 'app_check_email')]
     public function checkEmail(SendMailService $a): Response
     {
-      die('function checkemail ResetPasswordCOntroll');
+      //die('function checkemail ResetPasswordCOntroll');
         // Generate a fake token if the user does not exist or someone hit this page directly.
         // This prevents exposing whether or not a user was found with the given email address or not
         if (null === ($resetToken = $this->getTokenObjectFromSession())) {
