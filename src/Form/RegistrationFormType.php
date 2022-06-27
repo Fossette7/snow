@@ -22,7 +22,7 @@ class RegistrationFormType extends AbstractType
   {
     $builder
       ->add('username', TextType::class, [
-        'label' => 'Pseudo'
+        'label' => 'Pseudo',
       ])
       ->add('avatar', FileType::class, [
         'label' => 'Votre avatar',

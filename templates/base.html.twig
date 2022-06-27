@@ -16,6 +16,11 @@
             {{ message }}
         </div>
     {% endfor %}
+    {% for flash in app.flashes('error') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
     <!-- Fin Message flash -->
   <!-- Custom styles for this template -->
   <link rel="icon" type="image/png" href="{{ asset('dist/picture/logo.ico.png') }}">

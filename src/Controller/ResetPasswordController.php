@@ -165,9 +165,9 @@ class ResetPasswordController extends AbstractController
         }
 
         $email = (new TemplatedEmail())
-            ->from(new Address('reybeka.dev@gmail.com', 'Security'))
+            ->from(new Address('tests_oc@douastart.com', 'Security'))
             ->to($user->getEmail())
-            ->subject('Votre demande de réinisialisation de mot de passe')
+            ->subject('Votre demande de réinitialisation de mot de passe')
             ->htmlTemplate('reset_password/email.html.twig')
             ->context([
                 'resetToken' => $resetToken,
