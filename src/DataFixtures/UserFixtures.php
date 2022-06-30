@@ -9,29 +9,60 @@ use Faker;
 
 class UserFixtures extends Fixture
 {
-    public const USER_REFERENCE = 'user-ref';
+  public const USER_REFERENCE = 'user-ref';
 
-    public function load(ObjectManager $manager): void
-    {
-        // $product = new Product();
-        // $manager->persist($product);
+  public function load(ObjectManager $manager): void
+  {
 
-        $faker = Faker\Factory::create();
+    $userList = [
+      [
+        'username' => 'admin',
+        'mail' => 'pomme@pommemail.com',
+        'role' => ['ROLE_ADMIN'],
+        'password' => '123456',
+      ],
+      [
+        'username' => 'matthias',
+        'mail' => 'matthias@pommemail.com',
+        'role' => ['ROLE_USER'],
+        'password' => '123456',
+      ],
+      [
+        'username' => 'elodie',
+        'mail' => 'elodie@pommemail.com',
+        'role' => ['ROLE_USER'],
+        'password' => '123456',
+      ],
+      [
+        'username' => 'joshua',
+        'mail' => 'joshua@pommemail.com',
+        'role' => ['ROLE_USER'],
+        'password' => '123456',
+      ],
+      [
+        'username' => 'anna',
+        'mail' => 'fraise@pommemail.com',
+        'role' => ['ROLE_ADMIN'],
+        'password' => '123456',
+      ],
+    ];
 
-            $user= New User();
-            $user->setUsername('admin');
-            $user->setEmail('pomme@pommemail.com');
-            $user->setActive(true);
-            $user->setCreatedAt(new \DateTime());
-            $user->setRole('admin');
-            $user->setavatar($faker->imageUrl());
-            $password = '123456';
-            $user->setPassword($password);
+    foreach ($userList as $currentUser) {
+      $faker = Faker\Factory::create();
 
-            $manager->persist($user);
+      $user = new User();
+      $user->setUsername($currentUser['username']);
+      $user->setEmail($currentUser['mail']);
+      $user->setActive(true);
+      $user->setCreatedAt(new \DateTime());
+      $user->setRoles($currentUser['role']);
+      $user->setavatar($faker->imageUrl());
+      $user->setPassword($currentUser['password']);
 
-            $manager->flush();
+      $manager->persist($user);
+      $manager->flush();
 
-            $this->addReference(self::USER_REFERENCE, $user);
+      $this->addReference(self::USER_REFERENCE.'-'.$currentUser['username'], $user);
     }
+  }
 }

@@ -39,7 +39,7 @@
              and trick.author.email ==  app.user.email
              or is_granted('ROLE_ADMIN') %}
         <div class="show-button">
-            <div class="p-2"><a href="{{ path('trick_edit', {'id': trick.id}) }}" class="btn btn-warning">Modifier</a>
+            <div class="p-2"><a href="{{ path('trick_edit', {'slug': trick.slug}) }}" class="btn btn-warning">Modifier</a>
             </div>
 
             {{ include('trick/_delete_form.html.twig',{'button_label':'supprimer'}) }}

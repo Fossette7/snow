@@ -10,6 +10,9 @@ use Doctrine\Persistence\ObjectManager;
 
 class CommentFixtures extends Fixture implements DependentFixtureInterface
 {
+
+    public const COMMENT_REFERENCE = 'comment-ref';
+
     public function load(ObjectManager $manager ): void
     {
         // $product = new Product();
@@ -23,22 +26,25 @@ class CommentFixtures extends Fixture implements DependentFixtureInterface
       ];
 
       $userNameAsso = [
-        0 => 'Matthias',
-        1 => 'Elodie',
-        2 => 'Anna',
-        3 => 'Joshua'
+        0 => 'matthias',
+        1 => 'elodie',
+        2 => 'admin',
+        3 => 'joshua'
       ];
 
 
       for($i=0; $i<=3; $i++){
         $comment = new Comment();
-        $comment->setContent('Je suis un commentaire');
+        $comment->setContent('Je suis un commentaire '.$i);
         $comment->setCreatedAt(new \datetime('now'));
         $comment->setIsEnabled('true');
         $comment->setTrick($this->getReference(TrickFixtures::TRICK_REFERENCE.'-'.$idTrickAsso[$i]));
         $comment->setAuthor($this->getReference(UserFixtures::USER_REFERENCE.'-'.$userNameAsso[$i]));
 
-          $manager->flush();
+        $manager->persist($comment);
+        $manager->flush();
+
+        $this->addReference(self::COMMENT_REFERENCE.'-'.$i, $comment);
       }
     }
 
