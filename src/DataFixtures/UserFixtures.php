@@ -6,32 +6,72 @@ use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFixtures extends Fixture
 {
-    public const USER_REFERENCE = 'user-ref';
+  public const USER_REFERENCE = 'user-ref';
 
-    public function load(ObjectManager $manager): void
-    {
-        // $product = new Product();
-        // $manager->persist($product);
+  private UserPasswordHasherInterface $hasher;
 
-        $faker = Faker\Factory::create();
+  public function __construct(UserPasswordHasherInterface $hasher)
+  {
+    $this->hasher = $hasher;
+  }
 
-            $user= New User();
-            $user->setUsername('admin');
-            $user->setEmail('pomme@pommemail.com');
-            $user->setActive(true);
-            $user->setCreatedAt(new \DateTime());
-            $user->setRole('admin');
-            $user->setavatar($faker->imageUrl());
-            $password = '123456';
-            $user->setPassword($password);
+  public function load(ObjectManager $manager): void
+  {
 
-            $manager->persist($user);
+    $userList = [
+      [
+        'username' => 'admin',
+        'mail' => 'pomme@pommemail.com',
+        'role' => ['ROLE_ADMIN'],
+        'password' => '123456',
+      ],
+      [
+        'username' => 'matthias',
+        'mail' => 'matthias@pommemail.com',
+        'role' => ['ROLE_USER'],
+        'password' => '123456',
+      ],
+      [
+        'username' => 'elodie',
+        'mail' => 'elodie@pommemail.com',
+        'role' => ['ROLE_USER'],
+        'password' => '123456',
+      ],
+      [
+        'username' => 'joshua',
+        'mail' => 'joshua@pommemail.com',
+        'role' => ['ROLE_USER'],
+        'password' => '123456',
+      ],
+      [
+        'username' => 'anna',
+        'mail' => 'fraise@pommemail.com',
+        'role' => ['ROLE_ADMIN'],
+        'password' => '123456',
+      ],
+    ];
 
-            $manager->flush();
+    foreach ($userList as $currentUser) {
+      $faker = Faker\Factory::create();
 
-            $this->addReference(self::USER_REFERENCE, $user);
+      $user = new User();
+      $user->setUsername($currentUser['username']);
+      $user->setEmail($currentUser['mail']);
+      $user->setActive(true);
+      $user->setCreatedAt(new \DateTime());
+      $user->setRoles($currentUser['role']);
+      $user->setavatar($faker->imageUrl());
+      $password = $this->hasher->hashPassword($user, $currentUser['password']);
+      $user->setPassword($password);
+
+      $manager->persist($user);
+      $manager->flush();
+
+      $this->addReference(self::USER_REFERENCE.'-'.$currentUser['username'], $user);
     }
+  }
 }

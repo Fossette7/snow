@@ -16,6 +16,11 @@
             {{ message }}
         </div>
     {% endfor %}
+    {% for flash in app.flashes('error') %}
+        <div class="alert alert-danger">
+            {{ message }}
+        </div>
+    {% endfor %}
     <!-- Fin Message flash -->
   <!-- Custom styles for this template -->
   <link rel="icon" type="image/png" href="{{ asset('dist/picture/logo.ico.png') }}">
@@ -53,7 +58,7 @@
                 {% endif %}
 
                 {% if is_granted('ROLE_ADMIN') %}
-                    <a href="" class="btn btn-light-blue me-3" type="button"><i class="fas fa fa-user">
+                    <a href="{{path('admin_user_list')}}" class="btn btn-outline-light me-3" type="button"><i class="fas fa fa-user">
                         </i>Admin</a>
                 {% endif %}
 

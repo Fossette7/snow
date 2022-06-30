@@ -18,24 +18,24 @@
                     <div class="card col-md-12 p-0">
                         <!--<img class="card-img-top" src="https://picsum.photos/400/301" alt="Card image cap">-->
                         {% if trick.image is empty %}
-                            <a href="{{ path('trick_show',{'id': trick.id}) }}"><img class="card-img-top" src="{{ asset('dist/picture/no-image.jpeg') }}"
+                            <a href="{{ path('trick_show',{'id': trick.id, 'slug': trick.slug}) }}"><img class="card-img-top" src="{{ asset('dist/picture/no-image.jpeg') }}"
                                     alt="Card image cap"></a>
                         {% else %}
                             {# display first image #}
-                            <a href="{{ path('trick_show',{'id': trick.id}) }}"><img class="card-img-top" alt="{{ trick.image[0].name }}" src="{{ asset('uploads/images/') ~ trick.image[0].name }}"/></a>
+                            <a href="{{ path('trick_show',{'id': trick.id, 'slug': trick.slug}) }}"><img class="card-img-top" alt="{{ trick.image[0].name }}" src="{{ asset('uploads/images/') ~ trick.image[0].name }}"/></a>
                         {% endif %}
                         <div class="card-body">
                             {# If log in display Buttons trick-edit & trick-delete#}
                             {% if app.user.email is defined and trick.author.email ==  app.user.email or is_granted('ROLE_ADMIN') %}
                                 <div class="icon offset-10 col-2">
-                                    <a href="{{ path('trick_edit', {'id': trick.id}) }}"><i
+                                    <a href="{{ path('trick_edit', {'id': trick.id, 'slug': trick.slug}) }}"><i
                                                 class="btn fas fa-pencil-alt me-2"></i></a>
 
-                                    <form method="post" action="{{ path('trick_delete', {'id': trick.id}) }}"
+                                    <form method="post" action="{{ path('trick_delete', {'id': trick.id, 'slug': trick.slug}) }}"
                                           onsubmit="return confirm('Etes-vous sûr de vouloir supprimer ce post?');"
                                           xmlns="http://www.w3.org/1999/html">
                                         <input type="hidden" name="_token"
-                                               value="{{ csrf_token('delete' ~ trick.id) }}">
+                                               value="{{ csrf_token('delete' ~ trick.slug) }}">
                                         <button type="submit" class="btn myTrashTrick me-2"><i class="fa fa-trash"
                                                                                                aria-hidden="true"></i>
                                         </button>
@@ -44,7 +44,7 @@
                                 </div>
                             {% endif %}
                             <h4 class="card-title">
-                                <a href="{{ path('trick_show',{'id': trick.id}) }}" class="trickname-card">{{ trick.name|capitalize }}</a>
+                                <a href="{{ path('trick_show',{'id': trick.id, 'slug': trick.slug}) }}" class="trickname-card">{{ trick.name|capitalize }}</a>
                             </h4>
                             <div class="metadata text-muted small"> Ecrit le {{ trick.createdAt |date('d/m/Y') }}</div>
                             <p class="card-text">{{ trick.description|capitalize }}</p>
@@ -54,7 +54,7 @@
                         </div>
                         <div class=" col-12">
                             <div class="p-2"><a type="button" class="btn btn-primary"
-                                                href="{{ path('trick_show',{'id': trick.id}) }}">En savoir plus</a>
+                                                href="{{ path('trick_show',{'id': trick.id, 'slug': trick.slug}) }}">En savoir plus</a>
                             </div>
                         </div>
                     </div>

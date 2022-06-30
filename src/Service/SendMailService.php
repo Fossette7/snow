@@ -43,21 +43,20 @@ class SendMailService extends AbstractController
   public function sendWelcomeMail(MailerInterface $mailer) :void
   {
     if($email){
-      $email = (new TemplatedEmail())
-        ->from(new Address('reybeka.dev@gmail.com'))
-        ->to(new Address($email))
-        ->subject('Inscription Snowtricks!')
-        ->text('Bienvenue dans la communauté Snowtricks!')
-
-        // path of the Twig template to render
-        ->htmlTemplate('registration/email.html.twig')
-
-        // pass variables (name => value) to the template
-        ->context([
-          'expiration_date' => new \DateTime('+1 hour'),
+      $email = new TemplatedEmail();
+      $email->from('tests_oc@douastart.com');
+      $email->to($user->getEmail());
+      $email->subject('Votre inscription sur Snowtricks');
+      $email->htmlTemplate('registration/email.html.twig');
+      // pass variables (name => value) to the template
+      $email->context([
+        'toto' => 'Validé - Welcome e-mail',
+        'expiration_date' => new \DateTime('+1 hour'),
         ])
       ;
-     $this->mailer->send($email);
+      $email->text('Bienvenue dans la communauté Snowtricks!');
+
+      $this->mailer->send($email);
     }
   }
 

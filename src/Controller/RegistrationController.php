@@ -16,6 +16,8 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
+use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
+use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 
 
@@ -23,8 +25,9 @@ class RegistrationController extends AbstractController
 {
     private $mailer;
 
-    public function __construct(MailerInterface $mailer)
+    public function __construct(VerifyEmailHelperInterface $helper, MailerInterface $mailer)
     {
+        $this->verifyEmailHelper = $helper;
         $this->mailer = $mailer;
     }
 
@@ -53,28 +56,35 @@ class RegistrationController extends AbstractController
             }
             $user->setRoles(['ROLE_USER']);
             $entityManager->persist($user);
-            //$entityManager->flush();
+            $entityManager->flush();
 
+          //verify email / https://github.com/SymfonyCasts/verify-email-bundle
+          $signatureComponents = $this->verifyEmailHelper->generateSignature(
+            'verification_enregistrement',
+            $user->getId(),
+            $user->getEmail()
+          );
 
           $email = new TemplatedEmail();
-          $email->from('reybeka.dev@gmail.com');
-          $email->to($user->getEmail());
+          $email->from('tests_oc@douastart.com');
+          $email->to('tests_oc@douastart.com'); //$user->getEmail()
           $email->subject('Votre inscription sur Snowtricks');
           $email->htmlTemplate('registration/email.html.twig');
-          $email->context(['toto' => 'Validé - Welcome e-mail']);
+          $email->context(['signedUrl' => $signatureComponents->getSignedUrl()]);
           $email->text('Hello World');
           $this->mailer->send($email);
 
-          $this->addFlash('success', 'Un e-mail de validation a été envoyé, vérifier vos e-mails');
+          $this->addFlash('success', 'Un e-mail de validation vous a été envoyé');
 
           return $userAuthenticator->authenticateUser(
-            $user,
-            $authenticator,
-            $request
+           $user,
+           $authenticator,
+           $request,
           );
 
-        }
+          return $this->redirectToRoute('home');
 
+        }
         return $this->render('registration/register.html.twig',[
             'registrationForm' => $form->createView()
         ]);
@@ -84,21 +94,22 @@ class RegistrationController extends AbstractController
 
     public function verifyUserEmail (Request $request) :Response
   {
-    die('verification enregistrement de compte');
+      //die('verification enregistrement de compte');
       $this->denyAccessUnlessGranted ('IS_AUTHENTICATED_FULLY');
       $user = $this->getUser();
-      // do not get  the User's Id or Email from Request Obbject
+      // do not get  the User's Id or Email from Request Object
         try{
-          $this->verifyEmailHelper->validateEmailConfirmation($request->getUri(), $user->getId(), $user->getEmail());
+          $this->verifyEmailHelper->validateEmailConfirmation(
+            $request->getUri(),
+            $user->getId(),
+            $user->getEmail());
         }catch (VerifyEmailExceptionInterface $e) {
-          $this->addFlash('verify_email_error', $e->getReason());
+          $this->addFlash('error', $e->getReason());
 
           return $this->redirectToRoute('register');
         }
 
-    // Mark your user as verified. e.g. switch a User::verified property to true
-
-    $this->addFlash('success', 'Your e-mail address has been verified.');
+    $this->addFlash('success', 'Votre adresse e-mail est vérifiée.');
 
     return $this->redirectToRoute('home');
   }

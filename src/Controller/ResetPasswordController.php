@@ -139,6 +139,7 @@ class ResetPasswordController extends AbstractController
 
     private function processSendingPasswordResetEmail(string $emailFormData, MailerInterface $mailer, TranslatorInterface $translator): RedirectResponse
     {
+
         $user = $this->entityManager->getRepository(User::class)->findOneBy([
             'email' => $emailFormData,
         ]);
@@ -155,19 +156,19 @@ class ResetPasswordController extends AbstractController
             // the lines below and change the redirect to 'app_forgot_password_request'.
             // Caution: This may reveal if a user is registered or not.
             //
-            // $this->addFlash('reset_password_error', sprintf(
-            //     '%s - %s',
-            //     $translator->trans(ResetPasswordExceptionInterface::MESSAGE_PROBLEM_HANDLE, [], 'ResetPasswordBundle'),
-            //     $translator->trans($e->getReason(), [], 'ResetPasswordBundle')
-            // ));
+             $this->addFlash('reset_password_error',sprintf(
+                '%s - %s',
+                 $translator->trans(ResetPasswordExceptionInterface::MESSAGE_PROBLEM_HANDLE, [], 'ResetPasswordBundle'),
+                 $translator->trans($e->getReason(), [], 'ResetPasswordBundle')
+             ));
 
-            return $this->redirectToRoute('app_check_email');
+            return $this->redirectToRoute('app_forgot_password_request');
         }
 
         $email = (new TemplatedEmail())
-            ->from(new Address('reybeka.dev@gmail.com', 'Security'))
+            ->from(new Address('tests_oc@douastart.com', 'Security'))
             ->to($user->getEmail())
-            ->subject('Votre demande de réinisialisation de mot de passe')
+            ->subject('Votre demande de réinitialisation de mot de passe')
             ->htmlTemplate('reset_password/email.html.twig')
             ->context([
                 'resetToken' => $resetToken,
