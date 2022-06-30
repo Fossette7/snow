@@ -6,10 +6,18 @@ use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFixtures extends Fixture
 {
   public const USER_REFERENCE = 'user-ref';
+
+  private UserPasswordHasherInterface $hasher;
+
+  public function __construct(UserPasswordHasherInterface $hasher)
+  {
+    $this->hasher = $hasher;
+  }
 
   public function load(ObjectManager $manager): void
   {
@@ -57,7 +65,8 @@ class UserFixtures extends Fixture
       $user->setCreatedAt(new \DateTime());
       $user->setRoles($currentUser['role']);
       $user->setavatar($faker->imageUrl());
-      $user->setPassword($currentUser['password']);
+      $password = $this->hasher->hashPassword($user, $currentUser['password']);
+      $user->setPassword($password);
 
       $manager->persist($user);
       $manager->flush();

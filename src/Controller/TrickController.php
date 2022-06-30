@@ -82,7 +82,7 @@ class TrickController extends AbstractController
     ]);
   }
 
-  #[Route('/{slug}/detail', name: 'trick_show', methods: ['GET', 'POST'])]
+  #[Route('/{id}/{slug}/detail', name: 'trick_show', methods: ['GET', 'POST'])]
   public function show(Request $request, ManagerRegistry $doctrine, Trick $trick = null): Response
   {
     //if $trick is null redirect
@@ -124,7 +124,7 @@ class TrickController extends AbstractController
     ]);
   }
 
-  #[Route('/{slug}/edit', name: 'trick_edit', methods: ['GET', 'POST'])]
+  #[Route('/{id}/{slug}/edit', name: 'trick_edit', methods: ['GET', 'POST'])]
   public function edit(
     Request $request,
     Trick $trick,
@@ -183,7 +183,7 @@ class TrickController extends AbstractController
     ]);
   }
 
-  #[Route('/{slug}/delete', name: 'trick_delete', methods: ['GET', 'POST'])]
+  #[Route('/{id}/{slug}/delete', name: 'trick_delete', methods: ['GET', 'POST'])]
   public function delete(Request $request, Trick $trick, EntityManagerInterface $entityManager): Response
   {
     if ($this->isCsrfTokenValid('delete'.$trick->getId(), $request->request->get('_token'))) {
