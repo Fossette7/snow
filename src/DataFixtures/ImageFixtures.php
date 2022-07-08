@@ -22,17 +22,22 @@ class ImageFixtures extends Fixture implements DependentFixtureInterface
   public function load(ObjectManager $manager): void
   {
     $tricksName = [
-      'Mute',
-      'Sad',
-      'Indy',
-      'Stalfish',
-      'Tail grab',
-      'Nose grab',
-      'Japan',
-      'Slide',
-      'Ollie',
-      'Melon',
-      'Nollie',
+      0 =>'Mute',
+      1 =>'Sad',
+      2 =>'Indy',
+      3 =>'Stalfish',
+      4 =>'Tail grab',
+      5 =>'Nose grab',
+      6 =>'Japan',
+      7 =>'Slide',
+      8 =>'Ollie',
+      9 =>'Melon',
+      10 => 'Nollie',
+      11 => 'Nose Press',
+      12 => '50-50',
+      13 => 'Tail Press',
+      14 => 'Nose Press',
+      15 => 'Backside 180'
     ];
 
     $trickImages = [
@@ -47,9 +52,14 @@ class ImageFixtures extends Fixture implements DependentFixtureInterface
       8 => 'img-snowboard-1-628f7805e40fe.jpg',
       9 => 'snowtricks-photo-2-girl-628f55a2028cf.jpg',
       10 => 'img-snowboard-2-628f5ef387cf6.jpg',
+      11 => 'img-snowboard-7-6261096003824.jpeg',
+      12 => 'img-snowboard-7-6261096003824.jpeg',
+      13 => 'img-snowboard-1-628f7805e40fe.jpg',
+      14 => 'img-snowboard-2-628f5ef387cf6.jpg',
+      15 => 'snowtricks-photo-2-girl-628f55a2028cf.jpg',
     ];
 
-    for ($i = 0; $i < 10; $i++) {
+    for ($i = 0; $i <= 15; $i++) {
       $image = new Image();
       $image->setTrick($this->getReference(TrickFixtures::TRICK_REFERENCE.'-'.$tricksName [$i]));
       $image->setName($trickImages [$i]);
