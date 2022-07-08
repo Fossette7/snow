@@ -24,31 +24,31 @@ class UserFixtures extends Fixture
 
     $userList = [
       [
-        'username' => 'admin',
+        'username' => 'Admin',
         'mail' => 'pomme@pommemail.com',
         'role' => ['ROLE_ADMIN'],
         'password' => '123456',
       ],
       [
-        'username' => 'matthias',
+        'username' => 'Matthias',
         'mail' => 'matthias@pommemail.com',
         'role' => ['ROLE_USER'],
         'password' => '123456',
       ],
       [
-        'username' => 'elodie',
+        'username' => 'Elodie',
         'mail' => 'elodie@pommemail.com',
         'role' => ['ROLE_USER'],
         'password' => '123456',
       ],
       [
-        'username' => 'joshua',
+        'username' => 'Joshua',
         'mail' => 'joshua@pommemail.com',
         'role' => ['ROLE_USER'],
         'password' => '123456',
       ],
       [
-        'username' => 'anna',
+        'username' => 'Anna',
         'mail' => 'fraise@pommemail.com',
         'role' => ['ROLE_ADMIN'],
         'password' => '123456',
