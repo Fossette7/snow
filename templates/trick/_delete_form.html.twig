@@ -1,4 +1,4 @@
-<form method="post" action="{{ path('trick_delete', {'id': trick.id,'slug': trick.slug}) }}"
+<form method="post" action="{{ path('trick_delete', {'slug': trick.slug}) }}"
       onsubmit="return confirm('Etes-vous sûr de vouloir supprimer ce post?');" xmlns="http://www.w3.org/1999/html">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ trick.slug) }}">
 

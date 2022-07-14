@@ -31,7 +31,7 @@
                                     <a href="{{ path('trick_edit', {'slug': trick.slug}) }}"><i
                                                 class="btn fas fa-pencil-alt me-2"></i></a>
 
-                                    <form method="post" action="{{ path('trick_delete', {'id': trick.id, 'slug': trick.slug}) }}"
+                                    <form method="post" action="{{ path('trick_delete', {'slug': trick.slug}) }}"
                                           onsubmit="return confirm('Etes-vous sûr de vouloir supprimer ce post?');"
                                           xmlns="http://www.w3.org/1999/html">
                                         <input type="hidden" name="_token"
