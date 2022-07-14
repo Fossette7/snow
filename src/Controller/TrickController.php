@@ -65,6 +65,7 @@ class TrickController extends AbstractController
               }
             }
           }
+          $trick->setSlug($trick->getName());
 
           $entityManager = $doctrine->getManager();
           $entityManager->persist($trick);
@@ -83,7 +84,7 @@ class TrickController extends AbstractController
     ]);
   }
 
-  #[Route('/{id}/{slug}/detail', name: 'trick_show', methods: ['GET', 'POST'])]
+  #[Route('{slug}/detail', name: 'trick_show', methods: ['GET', 'POST'])]
   public function show(Request $request, ManagerRegistry $doctrine, Trick $trick = null, CommentManager $commentManager): Response
   {
     //if $trick is null redirect
@@ -129,7 +130,7 @@ class TrickController extends AbstractController
     ]);
   }
 
-  #[Route('/{id}/{slug}/edit', name: 'trick_edit', methods: ['GET', 'POST'])]
+  #[Route('/{slug}/edit', name: 'trick_edit', methods: ['GET', 'POST'])]
   public function edit(
     Request $request,
     Trick $trick,

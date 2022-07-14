@@ -39,7 +39,7 @@
             and trick.author.email ==  app.user.email
             or is_granted('ROLE_ADMIN') %}
         <div class="show-button">
-            <div class="p-2"><a href="{{ path('trick_edit', {'id': trick.id, 'slug': trick.slug}) }}"
+            <div class="p-2"><a href="{{ path('trick_edit', {'slug': trick.slug}) }}"
                                 class="btn btn-warning">Modifier</a>
             </div>
 
@@ -93,7 +93,7 @@
                         {% for i in range(1, maxPages) %}
                             <li class="page-item {% if currentPage == i %}active{% endif %}" aria-current="page">
                                 <a class="page-link"
-                                   href="{{ path('trick_show',{'id': trick.id, 'slug': trick.slug}) }}?page={{ i }}">{{ i }}</a>
+                                   href="{{ path('trick_show',{'slug': trick.slug}) }}?page={{ i }}">{{ i }}</a>
                             </li>
                         {% endfor %}
                     </ul>
