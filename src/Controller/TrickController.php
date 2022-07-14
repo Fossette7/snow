@@ -192,7 +192,8 @@ class TrickController extends AbstractController
   #[Route('/{slug}/delete', name: 'trick_delete', methods: ['GET', 'POST'])]
   public function delete(Request $request, Trick $trick, EntityManagerInterface $entityManager): Response
   {
-    if ($this->isCsrfTokenValid('delete'.$trick->getId(), $request->request->get('_token'))) {
+
+    if ($this->isCsrfTokenValid('delete'.$trick->getSlug(), $request->request->get('_token'))) {
       $entityManager->remove($trick);
       $entityManager->flush();
     }
