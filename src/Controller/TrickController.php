@@ -11,6 +11,7 @@ use App\Form\TrickType;
 use App\Service\FileUploader;
 
 use App\Repository\TrickRepository;
+use App\Service\Manager\CommentManager;
 use Doctrine\DBAL\Exception;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
@@ -83,7 +84,7 @@ class TrickController extends AbstractController
   }
 
   #[Route('/{id}/{slug}/detail', name: 'trick_show', methods: ['GET', 'POST'])]
-  public function show(Request $request, ManagerRegistry $doctrine, Trick $trick = null): Response
+  public function show(Request $request, ManagerRegistry $doctrine, Trick $trick = null, CommentManager $commentManager): Response
   {
     //if $trick is null redirect
     if ($trick === null) {
@@ -114,13 +115,17 @@ class TrickController extends AbstractController
 
       $this->addFlash('notice', 'Votre commentaire a bien été ajouté');
 
-      return $this->redirectToRoute('trick_show', ['id' => $trick->getId()]);
     }
 
-
+    $currentPage = $request->query->get('page')??1;
+    $comments = $commentManager->getCommentPagination($trick, $currentPage);
+    $maxPages = $commentManager->getPaginationPage($trick);
     return $this->render('trick/show.html.twig', [
       'trick' => $trick,
       'formComment' => $form->createView(),
+      'comments' => $comments,
+      'maxPages' => $maxPages,
+      'currentPage' => $currentPage
     ]);
   }
 
