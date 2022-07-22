@@ -84,7 +84,7 @@ class TrickController extends AbstractController
     ]);
   }
 
-  #[Route('{slug}/detail', name: 'trick_show', methods: ['GET', 'POST'])]
+  #[Route('/{slug}/detail', name: 'trick_show', methods: ['GET', 'POST'])]
   public function show(Request $request, ManagerRegistry $doctrine, Trick $trick = null, CommentManager $commentManager): Response
   {
     //if $trick is null redirect
