@@ -11,6 +11,7 @@ use App\Form\TrickType;
 use App\Service\FileUploader;
 
 use App\Repository\TrickRepository;
+use App\Service\Manager\CommentManager;
 use Doctrine\DBAL\Exception;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
@@ -64,6 +65,7 @@ class TrickController extends AbstractController
               }
             }
           }
+          $trick->setSlug($trick->getName());
 
           $entityManager = $doctrine->getManager();
           $entityManager->persist($trick);
@@ -82,8 +84,8 @@ class TrickController extends AbstractController
     ]);
   }
 
-  #[Route('/{id}/detail', name: 'trick_show', methods: ['GET', 'POST'])]
-  public function show(Request $request, ManagerRegistry $doctrine, Trick $trick = null): Response
+  #[Route('/{slug}/detail', name: 'trick_show', methods: ['GET', 'POST'])]
+  public function show(Request $request, ManagerRegistry $doctrine, Trick $trick = null, CommentManager $commentManager): Response
   {
     //if $trick is null redirect
     if ($trick === null) {
@@ -112,19 +114,23 @@ class TrickController extends AbstractController
       $entityManager->flush();
 
 
-      $this->addFlash('message', 'Votre commentaire a bien été ajouté');
+      $this->addFlash('notice', 'Votre commentaire a bien été ajouté');
 
-      return $this->redirectToRoute('trick_show', ['id' => $trick->getId()]);
     }
 
-
+    $currentPage = $request->query->get('page')??1;
+    $comments = $commentManager->getCommentPagination($trick, $currentPage);
+    $maxPages = $commentManager->getPaginationPage($trick);
     return $this->render('trick/show.html.twig', [
       'trick' => $trick,
       'formComment' => $form->createView(),
+      'comments' => $comments,
+      'maxPages' => $maxPages,
+      'currentPage' => $currentPage
     ]);
   }
 
-  #[Route('/{id}/edit', name: 'trick_edit', methods: ['GET', 'POST'])]
+  #[Route('/{slug}/edit', name: 'trick_edit', methods: ['GET', 'POST'])]
   public function edit(
     Request $request,
     Trick $trick,
@@ -183,10 +189,11 @@ class TrickController extends AbstractController
     ]);
   }
 
-  #[Route('/{id}/delete', name: 'trick_delete', methods: ['GET', 'POST'])]
+  #[Route('/{slug}/delete', name: 'trick_delete', methods: ['GET', 'POST'])]
   public function delete(Request $request, Trick $trick, EntityManagerInterface $entityManager): Response
   {
-    if ($this->isCsrfTokenValid('delete'.$trick->getId(), $request->request->get('_token'))) {
+
+    if ($this->isCsrfTokenValid('delete'.$trick->getSlug(), $request->request->get('_token'))) {
       $entityManager->remove($trick);
       $entityManager->flush();
     }

@@ -39,5 +39,9 @@
     </div>
 
     {{ include('user/_delete_form.html.twig') }}
+    {% block footer %}
+        {# override the base footer for a display:none #}
+    {% endblock %}
+
 </div>
 {% endblock %}

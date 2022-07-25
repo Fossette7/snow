@@ -11,10 +11,10 @@
             <!--<img src="https://picsum.photos/800/365" alt="img card"/>-->
 
             {% for image in trick.image %}
-                <img src="{{ asset('uploads/images/') ~ image.name}}" alt= "{{ image.name }}" />
+                <img src="{{ asset('uploads/images/') ~ image.name }}" alt="{{ image.name }}"/>
             {% endfor %}
 
-            <div class="d-flex flex-row offset-2" >
+            <div class="d-flex flex-row offset-2">
                 <div class="p-4 m-2"><span class="badge bg-secondary">{{ trick.category.name|capitalize }}</span></div>
                 <div class="p-4 m-2">
                     <p>Ecrit le
@@ -25,7 +25,7 @@
             <!-- https://www.youtube.com/embed/Opg5g4zsiGY -->
             <div class="embed-responsive embed-responsive-16by9">
                 {% for video in trick.video %}
-                <iframe class="embed-responsive-item" src="{{ video.url }}" title="YouTube video player"></iframe>
+                    <iframe class="embed-responsive-item" src="{{ video.url }}" title="YouTube video player"></iframe>
                 {% endfor %}
             </div>
 
@@ -35,43 +35,49 @@
             <p>écrit par: {{ trick.author.username|capitalize }}</p>
 
         </section>
-         {% if app.user.email is defined
-             and trick.author.email ==  app.user.email
-             or is_granted('ROLE_ADMIN') %}
+        {% if app.user.email is defined
+            and trick.author.email ==  app.user.email
+            or is_granted('ROLE_ADMIN') %}
         <div class="show-button">
-            <div class="p-2"><a href="{{ path('trick_edit', {'id': trick.id}) }}" class="btn btn-warning">Modifier</a>
+            <div class="p-2"><a href="{{ path('trick_edit', {'slug': trick.slug}) }}"
+                                class="btn btn-warning">Modifier</a>
             </div>
 
             {{ include('trick/_delete_form.html.twig',{'button_label':'supprimer'}) }}
             {% endif %}
-            <div class="p-2"><a href="{{ path('trick_index') }}" class="btn btn-outline-dark">Retour à la liste</a>
+            <div class="p-2">
+                <a href="{{ path('trick_index') }}" class="btn btn-outline-dark">Retour à la liste</a>
             </div>
         </div>
 
         <section class="comment bg-light p-3">
             <div class="container offset col-6">
                 <h3>Commentaires</h3>
-                {% for comment in trick.comments %}
+                {% for comment in comments %}
                     <div class="container">
                         <div class="row">
-                            <span class="col-5">
+                            <span class="col-6">
                                 {% if comment.author.avatar is empty %}
-                                    <img class=" rounded-circle avatar-img" src="{{ asset('dist/picture/avatardefault9.png') }}"
-                                 alt="Default Avatar picture">
+                                    <img class=" rounded-circle avatar-img"
+                                         src="{{ asset('dist/picture/avatardefault9.png') }}"
+                                         alt="Default Avatar picture">
                             </span>
                             {% else %}
-                                <p class="col-1">
-                                    <img class=" img-fluid avatar-img" src="{{ asset('uploads/images/') ~ comment.author.avatar }}" alt="avatar picture"/>
-                                </p>
+                                <span class="col-6">
+                                    <img class=" img-fluid avatar-img"
+                                         src="{{ asset('uploads/avatars/') ~ comment.author.avatar }}"
+                                         alt="avatar picture"/>
+                                </span>
                             {% endif %}
 
-                            <p class="col-2"> {{ comment.author }}</p>
-                            <p class="col-2"> {{ comment.createdAt|date('d-m-Y H:i') }}</p>
-                            <p class="col-4">{{ comment.content }}</p>
-                            <span class="col-3">
+                            <p class="col-12"> {{ comment.author }}</p>
+                            <p class="col-12"> {{ comment.createdAt|date('d-m-Y H:i') }}</p>
+                            <p class="col-12">{{ comment.content }}</p>
+                            <span class="col">
                                 {% if app.user.email is defined and comment.author.email == app.user.email or is_granted('ROLE_ADMIN') %}
                             <div class="icon offset-10 col-2 md-3">
-                                <a href="{{ path('comment_edit', {'id': comment.id}) }}"><i class="fas fa-pencil-alt"></i></a>
+                                <a href="{{ path('comment_edit', {'id': comment.id}) }}"><i
+                                            class="fas fa-pencil-alt"></i></a>
                                 <a href="{{ path('comment_delete', {'id': comment.id}) }}"
                                    type="submit"><i class="fa fa-trash" aria-hidden="true"></i></a>
                             </div>
@@ -82,19 +88,28 @@
                 {% else %}
                     <p>Pas de commentaire. Sois le premier à réagir!</p>
                 {% endfor %}
-
+                <nav aria-label="...">
+                    <ul class="pagination pagination-sm">
+                        {% for i in range(1, maxPages) %}
+                            <li class="page-item {% if currentPage == i %}active{% endif %}" aria-current="page">
+                                <a class="page-link"
+                                   href="{{ path('trick_show',{'slug': trick.slug}) }}?page={{ i }}">{{ i }}</a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </nav>
                 {% if app.user.email is defined %}
 
-                {{ form_start(formComment) }}
+                    {{ form_start(formComment) }}
 
-                {{ form_row(formComment.content) }}
-                <div class="d-none">
-                    {{ form_row(formComment.author) }}
-                </div>
+                    {{ form_row(formComment.content) }}
+                    <div class="d-none">
+                        {{ form_row(formComment.author) }}
+                    </div>
 
-                <button type="submit" class="btn btn-success">Ajouter</button>
+                    <button type="submit" class="btn btn-success">Ajouter</button>
 
-                {{ form_end(formComment) }}
+                    {{ form_end(formComment) }}
                 {% else %}
                     <a href="{{ path('app_login') }}" class="btn btn-light-blue me-3" type="button">
                         <i class="fas fa fa-user"></i> Entrez un commentaire

@@ -31,7 +31,7 @@ class CommentController extends AbstractController
 
       $this->addFlash('success', 'Votre commentaire est bien modifié');
 
-      return $this->redirectToRoute('trick_show', ['id'=>$comment->getTrick()->getId()], Response::HTTP_SEE_OTHER);
+      return $this->redirectToRoute('trick_show', ['slug'=> $comment->getTrick()->getSlug()], Response::HTTP_SEE_OTHER);
     }
 
     return $this->renderForm('comment/edit.html.twig', [
@@ -50,7 +50,7 @@ class CommentController extends AbstractController
       $this->addFlash('success', 'Votre commentaire est bien supprimé');
     }
 
-    return $this->redirectToRoute('trick_show', ['id'=>$comment->getTrick()->getId()], Response::HTTP_SEE_OTHER);
+    return $this->redirectToRoute('trick_show', ['slug' => $comment->getTrick()->getSlug()], Response::HTTP_SEE_OTHER);
   }
 
 }

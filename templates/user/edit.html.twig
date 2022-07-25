@@ -1,15 +1,18 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modification User{% endblock %}
+{% block title %}Modification profil utilisateur{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <h1>Modification du profil utilisateur</h1>
+    <div class="container showTricks">
+        <h1 class="img-header mb-3 font-weight-normal">Modification du profil utilisateur</h1>
 
         {{ include('user/_form.html.twig', {'button_label': 'Modifier'}) }}
-
-        <a href="{{ path('user_show', {'id': user.id}) }}">Retour</a>
-
         {{ include('user/_delete_form.html.twig') }}
+
+        <a href="{{ path('user_show', {'id': user.id}) }}" type="button" class="btn btn-outline-dark m-2">Retour au profil</a>
+
+        {% block footer %}
+            {# override the base footer for a display:none #}
+        {% endblock %}
     </div>
 {% endblock %}
