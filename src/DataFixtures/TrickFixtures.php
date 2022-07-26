@@ -91,8 +91,7 @@ class TrickFixtures extends Fixture implements DependentFixtureInterface
       $trick->setCreatedAt(new \DateTime());
       $trick->setCategory($this->getReference(CategoryFixtures::CATEGORY_REFERENCE.'-'.$catTrickAsso[$i]));
       $trick->setAuthor($this->getReference(UserFixtures::USER_REFERENCE.'-'.$trickUser[$i]));
-      $trick->setDescription('Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-      sed do eiusmod tempor incididunt ut labore');
+      $trick->setDescription('Une description d\'une figure folle, ou le rider vole dans les airs. Lorem ipsum dolor sit amet');
       $trick->setSlug(strtolower($this->slugger->slug($trick->getName())));
 
       $manager->persist($trick);
