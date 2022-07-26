@@ -10,7 +10,13 @@
         </div>
         <div class="row">
             <div class="p-2">
-                <a type="button" class="add-trick btn btn-dark" href="{{ path('trick_new') }}">Ajouter nouveau trick</a>
+                <a type="button" class="add-trick btn btn-dark"
+                   {% if app.user.email is defined %}
+                        href="{{ path('trick_new') }}"
+                   {% else %}
+                       href="{{ path('app_login') }}"
+                   {% endif %}
+                >Ajouter nouveau trick</a>
             </div>
             {% for trick in tricks %}
                 <!-- mettre la boucle for pour afficher les articles en BDD-->
