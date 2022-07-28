@@ -15,9 +15,7 @@ class CommentFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager ): void
     {
-        // $product = new Product();
-        // $manager->persist($product);
-
+      //
       $idTrickAsso = [
         0 => 'Mute',
         1 => 'Sad',
@@ -58,19 +56,45 @@ class CommentFixtures extends Fixture implements DependentFixtureInterface
 
 
       for($i=0; $i<=15; $i++){
-        $comment = new Comment();
-        $comment->setContent('Je suis un commentaire. 
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor 
-        incididunt ut labore et dolore magna aliqua. '.$i);
-        $comment->setCreatedAt(new \datetime('now'));
-        $comment->setIsEnabled('true');
-        $comment->setTrick($this->getReference(TrickFixtures::TRICK_REFERENCE.'-'.$idTrickAsso[$i]));
-        $comment->setAuthor($this->getReference(UserFixtures::USER_REFERENCE.'-'.$userNameAsso[$i]));
+        $comment1 = new Comment();
+        $comment1->setContent('Je suis un commentaire d\'un passionné de snowboard' . $i . 'On peut rêver de réussir ce trick');
+        $comment1->setCreatedAt(new \datetime('now'));
+        $comment1->setIsEnabled('true');
+        $comment1->setTrick($this->getReference(TrickFixtures::TRICK_REFERENCE.'-'.$idTrickAsso[$i]));
+        $comment1->setAuthor($this->getReference(UserFixtures::USER_REFERENCE.'-'.$userNameAsso[$i]));
 
-        $manager->persist($comment);
+        $manager->persist($comment1);
+
+        $comment2 = new Comment();
+        $comment2->setContent('Je suis un commentaire d\'un passionné de snowboard'. $i .'On peut rêver de réussir ce trick');
+        $comment2->setCreatedAt(new \datetime('now'));
+        $comment2->setIsEnabled('true');
+        $comment2->setTrick($this->getReference(TrickFixtures::TRICK_REFERENCE.'-'.$idTrickAsso[$i]));
+        $comment2->setAuthor($this->getReference(UserFixtures::USER_REFERENCE.'-'.$userNameAsso[$i]));
+
+        $manager->persist($comment2);
+
+        $comment3 = new Comment();
+        $comment3->setContent('Je suis un commentaire d\'un passionné de snowboard'. $i .'On peut rêver de réussir ce trick');
+        $comment3->setCreatedAt(new \datetime('now'));
+        $comment3->setIsEnabled('true');
+        $comment3->setTrick($this->getReference(TrickFixtures::TRICK_REFERENCE.'-'.$idTrickAsso[$i]));
+        $comment3->setAuthor($this->getReference(UserFixtures::USER_REFERENCE.'-'.$userNameAsso[$i]));
+
+        $manager->persist($comment3);
+
+        $comment4 = new Comment();
+        $comment4->setContent('Je suis un commentaire d\'un passionné de snowboard'. $i .'On peut rêver de réussir ce trick');
+        $comment4->setCreatedAt(new \datetime('now'));
+        $comment4->setIsEnabled('true');
+        $comment4->setTrick($this->getReference(TrickFixtures::TRICK_REFERENCE.'-'.$idTrickAsso[$i]));
+        $comment4->setAuthor($this->getReference(UserFixtures::USER_REFERENCE.'-'.$userNameAsso[$i]));
+
+        $manager->persist($comment4);
+
+        $this->addReference(self::COMMENT_REFERENCE.'-'.$i, $comment1, $comment2, $comment3, $comment4);
+
         $manager->flush();
-
-        $this->addReference(self::COMMENT_REFERENCE.'-'.$i, $comment);
       }
     }
 

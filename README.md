@@ -34,7 +34,7 @@ Open file `.env` and write **username** and **password** for
 
 `php bin/console doctrine:fixtures:load`
 
-### Ready to use!
+### Ready to use
 
 **Choix de la palette de couleur**
 > - [ ] theme 1 [palette verte](https://colorhunt.co/palette/3e8e7e7cd1b8fabb51faedc6).
@@ -42,7 +42,7 @@ Open file `.env` and write **username** and **password** for
   
   <br/><br/>
 Librairie utilisée
->- CSS
->- [Bootstrap 5.1](https://getbootstrap.com/docs/5.1/getting-started/introduction/)
->- PHP
->- [Symfony 5.4](https://symfony.com/download)
+> - CSS
+> - [Bootstrap 5.1](https://getbootstrap.com/docs/5.1/getting-started/introduction/)
+> - PHP 8.0.8
+> - [Symfony 5.4](https://symfony.com/download)
