@@ -53,22 +53,18 @@
               <a href="{{ path('trick_index') }}" class="nav-item nav-link" tabindex="-1">Tricks</a>
             </div>
             <div class="navbar-nav ms-auto">
-                {% if app.user.username is defined %}
-                    <span class="badge badge-pill badge-info me-3">Bonjour {{ app.user.username }}</span>
-                {% endif %}
-
                 {% if is_granted('ROLE_ADMIN') %}
                     <a href="{{path('admin_user_list')}}" class="btn btn-outline-light me-3" type="button"><i class="fas fa fa-user">
-                        </i>Admin</a>
+                        </i>Admin Dashboard</a>
                 {% endif %}
 
                 {% if is_granted('ROLE_USER') %}
                     <a href="{{ path('user_show',{'id': app.user.id}) }}" class="btn btn-light-blue me-3" type="button"><i class="fas fa fa-user">
-                        </i>Profil</a>
+                        </i>Bonjour {{ app.user.username }}</a>
                 {% endif %}
 
                 {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                    <a class="link me-3" href="{{ path('app_logout') }}">Logout</a>
+                    <a class="btn btn-secondary me-3" href="{{ path('app_logout') }}">Logout</a>
                 {% else %}
                     <a href="{{ path('register') }}" class="btn btn-light-blue me-3" type="button"><i class="fas fa fa-user">
                         </i>Inscription</a>
