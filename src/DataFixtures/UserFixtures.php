@@ -64,7 +64,7 @@ class UserFixtures extends Fixture
       $user->setActive(true);
       $user->setCreatedAt(new \DateTime());
       $user->setRoles($currentUser['role']);
-      $user->setavatar($faker->imageUrl());
+      //$user->setavatar($faker->imageUrl());
       $password = $this->hasher->hashPassword($user, $currentUser['password']);
       $user->setPassword($password);
 

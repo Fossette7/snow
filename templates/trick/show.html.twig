@@ -22,7 +22,7 @@
                     </p>
                 </div>
             </div>
-            <!-- https://www.youtube.com/embed/Opg5g4zsiGY -->
+            <!-- snowboarding video link example: https://www.youtube.com/embed/Opg5g4zsiGY -->
             <div class="embed-responsive embed-responsive-16by9">
                 {% for video in trick.video %}
                     <iframe class="embed-responsive-item" src="{{ video.url }}" title="YouTube video player"></iframe>
@@ -51,11 +51,12 @@
         </div>
 
         <section class="comment bg-light p-3">
-            <div class="container offset col-6">
-                <h3>Commentaires</h3>
+            <div class="container offset col-md-12">
+                <hr>
+   git             <h3 class="text-center">Commentaires</h3>
                 {% for comment in comments %}
                     <div class="container">
-                        <div class="row">
+                        <div class="text-center">
                             <span class="col-6">
                                 {% if comment.author.avatar is empty %}
                                     <img class=" rounded-circle avatar-img"
@@ -74,6 +75,7 @@
                             <p class="col-12"> {{ comment.createdAt|date('d-m-Y H:i') }}</p>
                             <p class="col-12">{{ comment.content }}</p>
                             <span class="col">
+                                {# We double check if user is owner of comment or if user is Admin #}
                                 {% if app.user.email is defined and comment.author.email == app.user.email or is_granted('ROLE_ADMIN') %}
                             <div class="icon offset-10 col-2 md-3">
                                 <a href="{{ path('comment_edit', {'id': comment.id}) }}"><i
@@ -84,6 +86,7 @@
                             </span>
                             {% endif %}
                         </div>
+                        <hr>
                     </div>
                 {% else %}
                     <p>Pas de commentaire. Sois le premier à réagir!</p>
